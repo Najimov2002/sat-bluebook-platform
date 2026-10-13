@@ -234,7 +234,7 @@
     <div class="p-6 overflow-y-auto text-slate-800 text-xs space-y-4">
       <div class="border-b pb-3">
         <h4 class="font-bold text-slate-900 mb-1">Geometriya va Doira:</h4>
-        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$</p>
+        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$ component</p>
       </div>
       <div>
         <h4 class="font-bold text-slate-900 mb-1">Hajm ($V$):</h4>
@@ -279,7 +279,7 @@
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
             O'qituvchi Boshqaruv Markazi
           </h1>
-          <p class="text-xs text-slate-400">Tezkor Savol Yuklash (Bulk Import) tizimi faol</p>
+          <p class="text-xs text-slate-400">Tezkor Savol Yuklash (Bulk Import) va Natijalarni Boshqarish</p>
         </div>
         <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
@@ -329,13 +329,7 @@ C) 35
 D) 45
 
 #2 What is the slope of the line passing through (0, 3) and (4, 11)?
-+2
-
-#3 If sin(A) = 4/5, what is cos(C)?
-A) 3/5
-+B) 4/5
-C) 3/4
-D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 font-mono outline-none focus:border-emerald-500"></textarea>
++2" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 font-mono outline-none focus:border-emerald-500"></textarea>
             </div>
 
             <button onclick="handleBulkImport()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40">
@@ -366,17 +360,20 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
             <div id="adm-questions-list" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
           </div>
 
-          <!-- Natijalar monitoringi -->
+          <!-- Natijalar monitoringi va TOZALASH -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
                 <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> O'quvchilar Natijalari (<span id="results-count-badge">0</span>)
               </h3>
               <div class="flex gap-2">
-                <button onclick="fetchCloudData()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded font-semibold text-slate-300 flex items-center gap-1">
-                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Yangilash
+                <button onclick="fetchCloudData()" title="Yangilash" class="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-semibold text-slate-300 flex items-center gap-1">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="exportResultsCSV()" class="text-xs bg-blue-900 hover:bg-blue-800 px-3 py-1 rounded font-semibold text-white flex items-center gap-1">
+                <button onclick="clearAllResults()" class="text-xs bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-300 px-2.5 py-1 rounded font-semibold flex items-center gap-1">
+                  <i data-lucide="trash-2" class="w-3 h-3"></i> Tozalash
+                </button>
+                <button onclick="exportResultsCSV()" class="text-xs bg-blue-900 hover:bg-blue-800 px-2.5 py-1 rounded font-semibold text-white flex items-center gap-1">
                   <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
                 </button>
               </div>
@@ -390,7 +387,7 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
                     <th class="p-2">Mock</th>
                     <th class="p-2">Ball</th>
                     <th class="p-2">To'g'ri</th>
-                    <th class="p-2">Sana</th>
+                    <th class="p-2 text-right">Amal</th>
                   </tr>
                 </thead>
                 <tbody id="adm-results-tbody"></tbody>
@@ -467,14 +464,46 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
         if (rRes.ok) {
           const rData = await rRes.json();
           if (rData) {
-            examResults = Object.keys(rData).map(key => rData[key]).reverse();
+            examResults = Object.keys(rData).map(key => ({ ...rData[key], firebaseKey: key })).reverse();
             localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
+          } else {
+            examResults = [];
+            localStorage.setItem('perm_sat_results', JSON.stringify([]));
           }
         }
       } catch (err) {
         console.warn("Lokal xotira ishlatildi:", err);
       }
       populateMockDropdowns();
+      renderAdminData();
+    }
+
+    // BARCHA NATIJALARNI TOZALASH (O'CHIRISH)
+    async function clearAllResults() {
+      if (!confirm("Diqqat! Barcha o'quvchilar natijalarini butunlay tozalab tashlamoqchimisiz?")) return;
+
+      try {
+        await fetch(`${DB_URL}/results.json`, { method: 'DELETE' });
+      } catch (e) { console.error(e); }
+
+      examResults = [];
+      localStorage.setItem('perm_sat_results', JSON.stringify([]));
+      renderAdminData();
+      alert("Barcha natijalar tozalandi!");
+    }
+
+    // BITTA NATIJANI O'CHIRISH
+    async function deleteSingleResult(firebaseKey, index) {
+      if (!confirm("Ushbu o'quvchi natijasini o'chirmoqchimisiz?")) return;
+
+      if (firebaseKey) {
+        try {
+          await fetch(`${DB_URL}/results/${firebaseKey}.json`, { method: 'DELETE' });
+        } catch (e) { console.error(e); }
+      }
+
+      examResults.splice(index, 1);
+      localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
       renderAdminData();
     }
 
@@ -513,14 +542,13 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
       admFilter.innerHTML = `<option value="ALL">Barcha Mocklar</option>` + mockList.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
-    // ================= TEZKOR PARSER (MATNDAN 22 TA SAVOLNI AJRATIB YUKLASH) =================
+    // ================= TEZKOR PARSER =================
     async function handleBulkImport() {
       const targetMock = document.getElementById('adm-bulk-mock-target').value;
       const rawText = document.getElementById('bulk-input-text').value.trim();
 
       if (!rawText) return alert("Iltimos, test matnini kiriting!");
 
-      // Savollarni # raqam bo'yicha bo'laklarga ajratish
       const blocks = rawText.split(/(?=#\d+)/g).filter(b => b.trim().length > 0);
       const parsedQuestions = [];
 
@@ -528,16 +556,12 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
         const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         if (lines.length === 0) continue;
 
-        // 1-qator: Savol matni (#1 olib tashlanadi)
         let questionText = lines[0].replace(/^#\d+\s*/, '').trim();
-
-        // Qolgan qatorlar: variantlar yoki javob
         const restLines = lines.slice(1);
         let options = [];
         let correctAnswer = "";
         let isMCQ = false;
 
-        // Variantlar bormi tekshirish (A), B), C), D))
         const hasMCQOptions = restLines.some(l => /^[+]?[A-D][\)\.]/i.test(l));
 
         if (hasMCQOptions) {
@@ -549,7 +573,6 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
             if (isCorrect) correctAnswer = cleanLine;
           });
         } else {
-          // SPR (Yopiq javob - faqat son)
           isMCQ = false;
           const ansLine = restLines.find(l => l.startsWith('+')) || restLines[0];
           if (ansLine) correctAnswer = ansLine.replace(/^\+\s*/, '').trim();
@@ -571,7 +594,6 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
         return alert("Savollar formatini tekshiring! Masalan: #1 Savol... keyin +A) Javob");
       }
 
-      // Bazaga yuklash
       for (let q of parsedQuestions) {
         try {
           const res = await fetch(`${DB_URL}/questions.json`, {
@@ -605,7 +627,7 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
       renderAdminQuestionsList();
     }
 
-    // TANLANGAN MOCKNI O'CHIRISH
+    // MOCKNI O'CHIRISH
     async function handleDeleteCurrentMock() {
       const selected = document.getElementById('adm-filter-mock').value;
       if (selected === "ALL") return alert("Iltimos, o'chirish uchun aniq bitta Mockni tanlang!");
@@ -893,11 +915,13 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
       };
 
       try {
-        await fetch(`${DB_URL}/results.json`, {
+        const res = await fetch(`${DB_URL}/results.json`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(resultEntry)
         });
+        const data = await res.json();
+        resultEntry.firebaseKey = data.name;
       } catch (e) { console.error(e); }
 
       examResults.unshift(resultEntry);
@@ -927,13 +951,17 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
       if (examResults.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" class="text-center p-3 text-slate-500">Hozircha natijalar mavjud emas</td></tr>`;
       } else {
-        tbody.innerHTML = examResults.map(r => `
+        tbody.innerHTML = examResults.map((r, idx) => `
           <tr class="border-b border-slate-800 hover:bg-slate-950">
             <td class="p-2 font-medium text-white">${r.name}</td>
             <td class="p-2 font-bold text-purple-400">${r.mock || 'MOCK 1'}</td>
             <td class="p-2 font-bold text-blue-400 font-mono">${r.score}</td>
             <td class="p-2 text-slate-300">${r.correct}</td>
-            <td class="p-2 text-slate-500">${r.date}</td>
+            <td class="p-2 text-right">
+              <button onclick="deleteSingleResult('${r.firebaseKey || ''}', ${idx})" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-0.5 bg-rose-950/40 rounded border border-rose-900/40 font-semibold">
+                O'chirish
+              </button>
+            </td>
           </tr>
         `).join('');
       }
@@ -977,6 +1005,7 @@ D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-x
     function openModal(id) { document.getElementById(`modal-${id}`).classList.remove('hidden'); refreshIcons(); }
     function closeModal(id) { document.getElementById(`modal-${id}`).classList.add('hidden'); }
 
+    // Suzuvchi Desmos
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
