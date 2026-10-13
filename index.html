@@ -30,7 +30,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen overflow-hidden">
 
-  <!-- ==================== 1. RO'YXATDAN O'TISH ==================== -->
+  <!-- ==================== 1. РЕГИСТРАЦИЯ / ГЛАВНАЯ ==================== -->
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl relative">
       <div class="absolute -top-3 left-8 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
@@ -43,7 +43,7 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
-          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Doimiy Monitoring Bazasi</p>
+          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Doimiy Baza Ulangan</p>
         </div>
       </div>
 
@@ -90,7 +90,7 @@
     </div>
   </div>
 
-  <!-- ==================== ADMIN PAROL KORINISHI (LOGIN VA PAROL MUTLAQO YASHIRILGAN) ==================== -->
+  <!-- ==================== МОДАЛЬНОЕ ОКНО ВХОДА АДМИНИСТРАТОРА ==================== -->
   <div id="modal-admin-auth" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center px-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
       <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">&times;</button>
@@ -100,7 +100,7 @@
           <i data-lucide="shield-check" class="w-6 h-6"></i>
         </div>
         <h3 class="text-lg font-bold text-white">Xavfsiz Kirish</h3>
-        <p class="text-xs text-slate-400">Tizimga kirish uchun maxfiy ma'lumotlarni kiriting</p>
+        <p class="text-xs text-slate-400">Tizimga kirish uchun ma'lumotlarni kiriting</p>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -121,7 +121,7 @@
     </div>
   </div>
 
-  <!-- ==================== 2. RASMIY BLUEBOOK IMTIHON XONASI ==================== -->
+  <!-- ==================== 2. СИМУЛЯТОР BLUEBOOK ==================== -->
   <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none">
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0 shadow-sm">
       <div class="flex items-center gap-3">
@@ -223,7 +223,7 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. DESMOS MODAL ==================== -->
+  <!-- ==================== 3. ОКНО DESMOS ==================== -->
   <div id="modal-desmos" class="hidden fixed top-16 right-6 z-50 w-[580px] h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
     <div class="draggable-header h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -237,7 +237,7 @@
     </div>
   </div>
 
-  <!-- ==================== 4. FORMULALAR (REFERENCE) ==================== -->
+  <!-- ==================== 4. СПРАВОЧНЫЕ ФОРМУЛЫ ==================== -->
   <div id="modal-reference" class="hidden fixed top-16 left-12 z-50 w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
     <div class="h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -258,7 +258,7 @@
     </div>
   </div>
 
-  <!-- ==================== 5. NATIJALAR TAHLILI ==================== -->
+  <!-- ==================== 5. РЕЗУЛЬТАТЫ ЭКЗАМЕНА ==================== -->
   <div id="screen-score" class="hidden fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-12">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center shadow-2xl">
       <div class="w-16 h-16 bg-blue-900/50 text-blue-400 border border-blue-700/60 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -285,7 +285,7 @@
     </div>
   </div>
 
-  <!-- ==================== 6. HIMOYALANGAN ADMIN PANEL ==================== -->
+  <!-- ==================== 6. ПАНЕЛЬ УЧИТЕЛЯ ==================== -->
   <div id="screen-admin" class="hidden fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col overflow-y-auto p-6 md:p-12">
     <div class="max-w-6xl w-full mx-auto">
       <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
@@ -294,7 +294,7 @@
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
             O'qituvchi Boshqaruv Markazi
           </h1>
-          <p class="text-xs text-slate-400">Doimiy saqlanuvchi ma'lumotlar bazasi faol</p>
+          <p class="text-xs text-slate-400">Firebase Cloud Bazasi Faol Ulandi</p>
         </div>
         <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
@@ -303,7 +303,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Yangi savol qo'shish -->
+        <!-- Добавление вопросов -->
         <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
           <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
             <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi SAT Savoli Qo'shish
@@ -352,7 +352,7 @@
           </form>
         </div>
 
-        <!-- Natijalar monitoringi -->
+        <!-- Таблица результатов и список вопросов -->
         <div class="lg:col-span-7 space-y-6">
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
@@ -384,7 +384,6 @@
             </div>
           </div>
 
-          <!-- Savollar Bazasi -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -399,22 +398,24 @@
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT ==================== -->
+  <!-- ==================== СВЯЗЬ С БАЗОЙ И ЛОГИКА ==================== -->
   <script>
-    // Maxfiy kalitlar xesh ko'rinishida saqlanadi (hech kim manba kodidan parolni o'qiy olmaydi)
-    // uzmaster so'zining SHA-256 xeshi
-    const AUTH_HASH = "d11bb740ca0484e1bce9f0d14b4f539794bfd02f5a6b0c2a8f8d6d84f93798da";
+    // ПРЯМАЯ И НАДЕЖНАЯ ПРОВЕРКА ВХОДА (uzmaster / uzmaster)
+    function verifyAdminAccess() {
+      const u = document.getElementById('auth-login').value.trim();
+      const p = document.getElementById('auth-pass').value.trim();
 
-    // SHA-256 hisoblash funksiyasi
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      if (u === "uzmaster" && p === "uzmaster") {
+        document.getElementById('auth-error-msg').classList.add('hidden');
+        closeAdminLoginModal();
+        switchScreen('admin');
+      } else {
+        document.getElementById('auth-error-msg').classList.remove('hidden');
+      }
     }
 
-    // Doimiy global baza
-    const DB_URL = "https://sat-bluebook-muhandislik-default-rtdb.firebaseio.com";
+    // Подключение к вашей базе Firebase
+    const DB_URL = "https://muhandislik-sat-default-rtdb.firebaseio.com";
 
     const DEFAULT_DATA = [
       {
@@ -451,7 +452,6 @@
       }
     ];
 
-    // Doimiy xotira (Doimiy mavjud bo'lishi kafolatlangan)
     let examPool = JSON.parse(localStorage.getItem('perm_sat_questions')) || [...DEFAULT_DATA];
     let examResults = JSON.parse(localStorage.getItem('perm_sat_results')) || [];
 
@@ -466,7 +466,6 @@
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // BAZA BILAN SINXRONIZATSIYA
     async function fetchCloudData() {
       try {
         const qRes = await fetch(`${DB_URL}/questions.json`);
@@ -487,7 +486,7 @@
           }
         }
       } catch (err) {
-        console.warn("Lokal zaxira ishlatilmoqda");
+        console.warn("Использована локальная копия:", err);
       }
       renderAdminData();
     }
@@ -535,7 +534,6 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // XAVFSIZ ADMIN TEKSHIRUVI
     function openAdminLoginModal() {
       document.getElementById('modal-admin-auth').classList.remove('hidden');
       document.getElementById('auth-login').value = '';
@@ -546,22 +544,6 @@
 
     function closeAdminLoginModal() {
       document.getElementById('modal-admin-auth').classList.add('hidden');
-    }
-
-    async function verifyAdminAccess() {
-      const u = document.getElementById('auth-login').value.trim();
-      const p = document.getElementById('auth-pass').value.trim();
-
-      const userHash = await sha256(u);
-      const passHash = await sha256(p);
-
-      // Faqat xeshlar solishtiriladi
-      if (userHash === AUTH_HASH && passHash === AUTH_HASH) {
-        closeAdminLoginModal();
-        switchScreen('admin');
-      } else {
-        document.getElementById('auth-error-msg').classList.remove('hidden');
-      }
     }
 
     function logoutAdmin() {
@@ -833,7 +815,6 @@
       switchScreen('score');
     }
 
-    // ================= ADMIN BOSHQARUVI =================
     function toggleAdmQuestionType(val) {
       const mcqBox = document.getElementById('adm-mcq-fields');
       if (val === 'spr') mcqBox.classList.add('hidden');
@@ -915,7 +896,6 @@
       link.click();
     }
 
-    // Draggable Desmos
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
@@ -946,7 +926,6 @@
       }
     })();
 
-    // Ilk ishga tushirish
     fetchCloudData();
     refreshIcons();
   </script>
