@@ -11,7 +11,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- MathJax -->
+  <!-- MathJax for SAT Math Formulas -->
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -30,7 +30,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen overflow-hidden">
 
-  <!-- ==================== 1. РЕГИСТРАЦИЯ / ГЛАВНАЯ ==================== -->
+  <!-- ==================== 1. RO'YXATDAN O'TISH & MOCK TANLASH ==================== -->
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl relative">
       <div class="absolute -top-3 left-8 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
@@ -43,7 +43,7 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
-          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Doimiy Baza Ulangan</p>
+          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Har bir test uchun 35:00 daqiqa</p>
         </div>
       </div>
 
@@ -53,29 +53,15 @@
           <input type="text" id="reg-name" placeholder="Masalan: Jasur Rahimov" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-blue-500 outline-none">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1">Bo'lim / Mavzu</label>
-            <select id="reg-filter-topic" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 focus:border-blue-500 outline-none">
-              <option value="all">Barcha mavzular (To'liq Mock)</option>
-              <option value="Heart of Algebra">Heart of Algebra</option>
-              <option value="Advanced Math">Advanced Math</option>
-              <option value="Problem-Solving">Problem-Solving & Data</option>
-              <option value="Geometry & Trig">Geometry & Trig</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1">Test vaqti</label>
-            <select id="reg-timer-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 focus:border-blue-500 outline-none">
-              <option value="2100">35 daqiqa (Standard SAT)</option>
-              <option value="1200">20 daqiqa (Mini-test)</option>
-              <option value="3600">60 daqiqa (Mashg'ulot)</option>
-            </select>
-          </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Topshirmoqchi bo'lgan Mock testni tanlang:</label>
+          <select id="reg-mock-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:border-blue-500 outline-none">
+            <!-- Mock ro'yxati bazadan keladi -->
+          </select>
         </div>
 
         <button onclick="launchExamSession()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30">
-          <span>Testni Boshlash</span>
+          <span>Testni Boshlash (35 daqiqa)</span>
           <i data-lucide="play" class="w-4 h-4 fill-current"></i>
         </button>
 
@@ -90,7 +76,7 @@
     </div>
   </div>
 
-  <!-- ==================== МОДАЛЬНОЕ ОКНО ВХОДА АДМИНИСТРАТОРА ==================== -->
+  <!-- ==================== ADMIN PAROL KORINISHI ==================== -->
   <div id="modal-admin-auth" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center px-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
       <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">&times;</button>
@@ -121,11 +107,11 @@
     </div>
   </div>
 
-  <!-- ==================== 2. СИМУЛЯТОР BLUEBOOK ==================== -->
+  <!-- ==================== 2. RASMIY BLUEBOOK IMTIHON XONASI ==================== -->
   <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none">
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0 shadow-sm">
       <div class="flex items-center gap-3">
-        <span class="font-bold text-sm tracking-tight text-slate-800">Section 2: Mathematics</span>
+        <span class="font-bold text-sm tracking-tight text-slate-800" id="header-mock-title">MOCK 1: Mathematics</span>
         <span class="text-slate-400 text-xs">|</span>
         <span class="text-xs font-semibold text-slate-600">Directions <i data-lucide="chevron-down" class="inline w-3 h-3"></i></span>
       </div>
@@ -171,7 +157,7 @@
             </button>
           </div>
 
-          <div id="q-topic-tag" class="text-[11px] font-bold uppercase tracking-wider text-blue-700 mb-2">Heart of Algebra</div>
+          <div id="q-topic-tag" class="text-[11px] font-bold uppercase tracking-wider text-blue-700 mb-2">Math Section</div>
           <div id="q-text-content" class="sat-math-text text-slate-900 mb-6"></div>
         </div>
 
@@ -223,7 +209,7 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. ОКНО DESMOS ==================== -->
+  <!-- ==================== 3. DESMOS MODAL ==================== -->
   <div id="modal-desmos" class="hidden fixed top-16 right-6 z-50 w-[580px] h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
     <div class="draggable-header h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -237,7 +223,7 @@
     </div>
   </div>
 
-  <!-- ==================== 4. СПРАВОЧНЫЕ ФОРМУЛЫ ==================== -->
+  <!-- ==================== 4. FORMULALAR (REFERENCE) ==================== -->
   <div id="modal-reference" class="hidden fixed top-16 left-12 z-50 w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
     <div class="h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -248,17 +234,17 @@
     </div>
     <div class="p-6 overflow-y-auto text-slate-800 text-xs space-y-4">
       <div class="border-b pb-3">
-        <h4 class="font-bold text-slate-900 mb-1">Geometriya va Doira formulalari:</h4>
+        <h4 class="font-bold text-slate-900 mb-1">Geometriya va Doira:</h4>
         <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$</p>
       </div>
       <div>
-        <h4 class="font-bold text-slate-900 mb-1">Hajm formulalari ($V$):</h4>
+        <h4 class="font-bold text-slate-900 mb-1">Hajm ($V$):</h4>
         <p>Silindr: $V = \pi r^2 h$, Shar: $V = \frac{4}{3} \pi r^3$, Konus: $V = \frac{1}{3} \pi r^2 h$</p>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 5. РЕЗУЛЬТАТЫ ЭКЗАМЕНА ==================== -->
+  <!-- ==================== 5. NATIJALAR TAHLILI ==================== -->
   <div id="screen-score" class="hidden fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-12">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center shadow-2xl">
       <div class="w-16 h-16 bg-blue-900/50 text-blue-400 border border-blue-700/60 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -266,7 +252,7 @@
       </div>
 
       <h2 class="text-2xl font-bold text-white mb-1">Sinov yakunlandi!</h2>
-      <p class="text-xs text-slate-400 mb-6">Natijangiz ustoz bazasiga muvaffaqiyatli saqlandi.</p>
+      <p class="text-xs text-slate-400 mb-6" id="score-mock-badge">MOCK 1 natijangiz ustoz bazasiga saqlandi.</p>
 
       <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-6">
         <div id="final-scaled-score" class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 font-mono">--</div>
@@ -285,7 +271,7 @@
     </div>
   </div>
 
-  <!-- ==================== 6. ПАНЕЛЬ УЧИТЕЛЯ ==================== -->
+  <!-- ==================== 6. HIMOYALANGAN ADMIN PANEL ==================== -->
   <div id="screen-admin" class="hidden fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col overflow-y-auto p-6 md:p-12">
     <div class="max-w-6xl w-full mx-auto">
       <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
@@ -294,7 +280,7 @@
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
             O'qituvchi Boshqaruv Markazi
           </h1>
-          <p class="text-xs text-slate-400">Firebase Cloud Bazasi Faol Ulandi</p>
+          <p class="text-xs text-slate-400">Mock testlarni boshqarish, savol qo'shish va o'chirish</p>
         </div>
         <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
@@ -303,57 +289,87 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Добавление вопросов -->
-        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-          <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-            <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi SAT Savoli Qo'shish
-          </h3>
-
-          <form onsubmit="handleCreateQuestion(event)" class="space-y-3.5 text-xs">
-            <div>
-              <label class="block font-semibold text-slate-400 mb-1">Mavzu guruhi:</label>
-              <select id="adm-topic" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
-                <option value="Heart of Algebra">Heart of Algebra</option>
-                <option value="Advanced Math">Advanced Math</option>
-                <option value="Problem-Solving">Problem-Solving and Data Analysis</option>
-                <option value="Geometry & Trig">Geometry and Trigonometry</option>
-              </select>
+        <!-- Chap tomonda: Mock yaratish va savol kiritish -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Yangi MOCK yaratish bloki -->
+          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3 flex items-center gap-1.5">
+              <i data-lucide="folder-plus" class="w-4 h-4"></i> Yangi Mock Guruhi Ochish
+            </h3>
+            <div class="flex gap-2">
+              <input type="text" id="new-mock-name" placeholder="Masalan: MOCK 2" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white outline-none focus:border-blue-500">
+              <button onclick="handleCreateMock()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition">
+                Mock Ochish
+              </button>
             </div>
+          </div>
 
-            <div>
-              <label class="block font-semibold text-slate-400 mb-1">Savol turi:</label>
-              <select id="adm-type" onchange="toggleAdmQuestionType(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
-                <option value="mcq">Multiple Choice (A, B, C, D)</option>
-                <option value="spr">Student-Produced Response (Son)</option>
-              </select>
-            </div>
+          <!-- Tanlangan Mock ichiga savol qo'shish formasi -->
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Savol Qo'shish
+            </h3>
 
-            <div>
-              <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX: $3x + 5 = 12$):</label>
-              <textarea id="adm-text" rows="4" required placeholder="Masalan: If $f(x) = x^2 - 4x + 7$, what is the minimum value?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
-            </div>
+            <form onsubmit="handleCreateQuestion(event)" class="space-y-3.5 text-xs">
+              <div>
+                <label class="block font-semibold text-slate-400 mb-1">Qaysi Mock-ga qo'shiladi:</label>
+                <select id="adm-target-mock" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
+                  <!-- Mocklar ro'yxati -->
+                </select>
+              </div>
 
-            <div id="adm-mcq-fields" class="space-y-2">
-              <label class="block font-semibold text-slate-400">Variantlar:</label>
-              <input type="text" id="adm-opt-a" placeholder="A varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-              <input type="text" id="adm-opt-b" placeholder="B varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-              <input type="text" id="adm-opt-c" placeholder="C varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-              <input type="text" id="adm-opt-d" placeholder="D varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-            </div>
+              <div>
+                <label class="block font-semibold text-slate-400 mb-1">Savol turi:</label>
+                <select id="adm-type" onchange="toggleAdmQuestionType(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
+                  <option value="mcq">Multiple Choice (A, B, C, D)</option>
+                  <option value="spr">Student-Produced Response (Son)</option>
+                </select>
+              </div>
 
-            <div>
-              <label class="block font-semibold text-slate-400 mb-1">To'g'ri javob:</label>
-              <input type="text" id="adm-correct" required placeholder="Variant matni yoki son (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
-            </div>
+              <div>
+                <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX: $3x + 5 = 12$):</label>
+                <textarea id="adm-text" rows="4" required placeholder="Masalan: If $3x + 7 = 22$, what is the value of $6x - 5$?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
+              </div>
 
-            <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
-              Bazada Saqlash
-            </button>
-          </form>
+              <div id="adm-mcq-fields" class="space-y-2">
+                <label class="block font-semibold text-slate-400">Variantlar:</label>
+                <input type="text" id="adm-opt-a" placeholder="A varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
+                <input type="text" id="adm-opt-b" placeholder="B varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
+                <input type="text" id="adm-opt-c" placeholder="C varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
+                <input type="text" id="adm-opt-d" placeholder="D varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
+              </div>
+
+              <div>
+                <label class="block font-semibold text-slate-400 mb-1">To'g'ri javob:</label>
+                <input type="text" id="adm-correct" required placeholder="Variant matni yoki son (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
+                Savolni Saqlash
+              </button>
+            </form>
+          </div>
+
         </div>
 
-        <!-- Таблица результатов и список вопросов -->
+        <!-- O'ng tomonda: Mocklar, Savollarni o'chirish va Natijalar -->
         <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Mocklar bo'yicha savollar ro'yxati va O'CHIRISH -->
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="list-ordered" class="w-4 h-4 text-purple-400"></i> Mock Testlar va Savollar
+              </h3>
+              <select id="adm-filter-mock" onchange="renderAdminQuestionsList()" class="bg-slate-950 border border-slate-800 text-xs rounded px-2 py-1 text-slate-300">
+                <!-- Filtr -->
+              </select>
+            </div>
+            <div id="adm-questions-list" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+          </div>
+
+          <!-- O'quvchilar natijalari -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -369,13 +385,14 @@
               </div>
             </div>
 
-            <div class="max-h-64 overflow-y-auto">
+            <div class="max-h-60 overflow-y-auto">
               <table class="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
                     <th class="p-2">Ism</th>
-                    <th class="p-2">Ball (SAT)</th>
-                    <th class="p-2">To'g'ri / Jami</th>
+                    <th class="p-2">Mock</th>
+                    <th class="p-2">Ball</th>
+                    <th class="p-2">To'g'ri</th>
                     <th class="p-2">Sana</th>
                   </tr>
                 </thead>
@@ -384,43 +401,22 @@
             </div>
           </div>
 
-          <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="database" class="w-4 h-4 text-purple-400"></i> Savollar Bazasi (<span id="adm-q-count">0</span> ta)
-              </h3>
-            </div>
-            <div id="adm-questions-list" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
-          </div>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- ==================== СВЯЗЬ С БАЗОЙ И ЛОГИКА ==================== -->
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // ПРЯМАЯ И НАДЕЖНАЯ ПРОВЕРКА ВХОДА (uzmaster / uzmaster)
-    function verifyAdminAccess() {
-      const u = document.getElementById('auth-login').value.trim();
-      const p = document.getElementById('auth-pass').value.trim();
-
-      if (u === "uzmaster" && p === "uzmaster") {
-        document.getElementById('auth-error-msg').classList.add('hidden');
-        closeAdminLoginModal();
-        switchScreen('admin');
-      } else {
-        document.getElementById('auth-error-msg').classList.remove('hidden');
-      }
-    }
-
-    // Подключение к вашей базе Firebase
+    // Shaxsiy Firebase bazangiz
     const DB_URL = "https://muhandislik-sat-default-rtdb.firebaseio.com";
 
+    // Standart Mock 1 savollari
     const DEFAULT_DATA = [
       {
         id: "1",
-        topic: "Heart of Algebra",
+        mock: "MOCK 1",
         type: "mcq",
         question: "If $3x + 7 = 22$, what is the value of $6x - 5$?",
         options: ["25", "30", "35", "45"],
@@ -428,7 +424,7 @@
       },
       {
         id: "2",
-        topic: "Advanced Math",
+        mock: "MOCK 1",
         type: "mcq",
         question: "For the quadratic function $f(x) = (x - 4)(x + 2)$, for what value of $x$ does the minimum value of $f(x)$ occur?",
         options: ["-1", "1", "2", "4"],
@@ -436,23 +432,16 @@
       },
       {
         id: "3",
-        topic: "Problem-Solving",
+        mock: "MOCK 1",
         type: "spr",
         question: "A line in the $xy$-plane passes through the points $(0, 3)$ and $(4, 11)$. What is the slope of this line?",
         options: [],
         correct: "2"
-      },
-      {
-        id: "4",
-        topic: "Geometry & Trig",
-        type: "mcq",
-        question: "In a right triangle $ABC$, the measure of angle $B = 90^\\circ$. If $\\sin(A) = \\frac{4}{5}$, what is the value of $\\cos(C)$?",
-        options: ["\\frac{3}{5}", "\\frac{4}{5}", "\\frac{3}{4}", "\\frac{5}{4}"],
-        correct: "\\frac{4}{5}"
       }
     ];
 
     let examPool = JSON.parse(localStorage.getItem('perm_sat_questions')) || [...DEFAULT_DATA];
+    let mockList = JSON.parse(localStorage.getItem('perm_mock_list')) || ["MOCK 1"];
     let examResults = JSON.parse(localStorage.getItem('perm_sat_results')) || [];
 
     let activeQuestions = [];
@@ -461,13 +450,15 @@
     let flaggedMap = {};
     let eliminatedOptions = {};
     let isEliminatorActive = false;
-    let studentData = { name: "", topic: "all" };
-    let timerSeconds = 2100;
+    let studentData = { name: "", mock: "MOCK 1" };
+    let timerSeconds = 2100; // Qat'iy 35 daqiqa
     let timerInterval = null;
     let isTimerHidden = false;
 
+    // BAZA BILAN ALOQA
     async function fetchCloudData() {
       try {
+        // Savollar
         const qRes = await fetch(`${DB_URL}/questions.json`);
         if (qRes.ok) {
           const qData = await qRes.json();
@@ -477,6 +468,17 @@
           }
         }
 
+        // Mock ro'yxati
+        const mRes = await fetch(`${DB_URL}/mocks.json`);
+        if (mRes.ok) {
+          const mData = await mRes.json();
+          if (mData) {
+            mockList = Object.values(mData);
+            localStorage.setItem('perm_mock_list', JSON.stringify(mockList));
+          }
+        }
+
+        // Natijalar
         const rRes = await fetch(`${DB_URL}/results.json`);
         if (rRes.ok) {
           const rData = await rRes.json();
@@ -486,105 +488,173 @@
           }
         }
       } catch (err) {
-        console.warn("Использована локальная копия:", err);
+        console.warn("Lokal zaxira ishlatildi:", err);
       }
+      populateMockDropdowns();
       renderAdminData();
     }
 
-    async function saveResultToCloud(resultObj) {
-      examResults.unshift(resultObj);
-      localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
-      try {
-        await fetch(`${DB_URL}/results.json`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(resultObj)
-        });
-      } catch (e) {
-        console.error(e);
+    // Yangi MOCK yaratish
+    async function handleCreateMock() {
+      const input = document.getElementById('new-mock-name');
+      const name = input.value.trim().toUpperCase();
+      if (!name) return alert("Mock nomini kiriting (masalan: MOCK 2)");
+
+      if (!mockList.includes(name)) {
+        mockList.push(name);
+        localStorage.setItem('perm_mock_list', JSON.stringify(mockList));
+        try {
+          await fetch(`${DB_URL}/mocks.json`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mockList)
+          });
+        } catch (e) { console.error(e); }
+        alert(`${name} muvaffaqiyatli ochildi!`);
+        input.value = '';
+        populateMockDropdowns();
+      } else {
+        alert("Bunday nomdagi Mock allaqachon mavjud!");
       }
     }
 
-    async function saveQuestionToCloud(questionObj) {
-      examPool.push(questionObj);
+    // Mock tanlash ro'yxatlarini to'ldirish
+    function populateMockDropdowns() {
+      // Bosh sahifadagi tanlash
+      const regSelect = document.getElementById('reg-mock-select');
+      regSelect.innerHTML = mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+
+      // Admindagi savol qo'shish tanlashi
+      const admTarget = document.getElementById('adm-target-mock');
+      admTarget.innerHTML = mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+
+      // Admindagi filtr
+      const admFilter = document.getElementById('adm-filter-mock');
+      admFilter.innerHTML = `<option value="ALL">Barchasi</option>` + mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+    }
+
+    // SAVOLNI O'CHIRISH
+    async function deleteQuestion(firebaseKey, index) {
+      if (!confirm("Ushbu savolni rostdan ham o'chirmoqchimisiz?")) return;
+
+      if (firebaseKey) {
+        try {
+          await fetch(`${DB_URL}/questions/${firebaseKey}.json`, { method: 'DELETE' });
+        } catch (e) { console.error(e); }
+      }
+      examPool.splice(index, 1);
       localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
+      renderAdminQuestionsList();
+    }
+
+    // MOCK-NI TO'LIQ O'CHIRISH
+    async function deleteEntireMock(mockName) {
+      if (!confirm(`${mockName} va uning ichidagi barcha savollarni o'chirmoqchimisiz?`)) return;
+
+      mockList = mockList.filter(m => m !== mockName);
+      examPool = examPool.filter(q => q.mock !== mockName);
+
+      localStorage.setItem('perm_mock_list', JSON.stringify(mockList));
+      localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
+
       try {
-        await fetch(`${DB_URL}/questions.json`, {
+        await fetch(`${DB_URL}/mocks.json`, { method: 'PUT', body: JSON.stringify(mockList) });
+        await fetch(`${DB_URL}/questions.json`, { method: 'PUT', body: JSON.stringify(examPool) });
+      } catch (e) { console.error(e); }
+
+      populateMockDropdowns();
+      renderAdminQuestionsList();
+    }
+
+    // Savol qo'shish
+    async function handleCreateQuestion(e) {
+      e.preventDefault();
+      const mock = document.getElementById('adm-target-mock').value;
+      const type = document.getElementById('adm-type').value;
+      const text = document.getElementById('adm-text').value.trim();
+      const correct = document.getElementById('adm-correct').value.trim();
+
+      let options = [];
+      if (type === 'mcq') {
+        options = [
+          document.getElementById('adm-opt-a').value.trim(),
+          document.getElementById('adm-opt-b').value.trim(),
+          document.getElementById('adm-opt-c').value.trim(),
+          document.getElementById('adm-opt-d').value.trim()
+        ];
+      }
+
+      const newQ = { id: Date.now().toString(), mock, type, question: text, options, correct };
+
+      try {
+        const res = await fetch(`${DB_URL}/questions.json`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(questionObj)
+          body: JSON.stringify(newQ)
         });
-      } catch (e) {
-        console.error(e);
-      }
-      renderAdminData();
+        const data = await res.json();
+        newQ.firebaseKey = data.name;
+      } catch (err) { console.error(err); }
+
+      examPool.push(newQ);
+      localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
+
+      alert(`${mock} ichiga savol qo'shildi!`);
+      e.target.reset();
+      renderAdminQuestionsList();
     }
 
-    function switchScreen(screenId) {
-      ['home', 'exam', 'score', 'admin'].forEach(s => {
-        document.getElementById(`screen-${s}`).classList.add('hidden');
-      });
-      document.getElementById(`screen-${screenId}`).classList.remove('hidden');
+    // Admin oynasidagi savollar ro'yxatini chiqarish
+    function renderAdminQuestionsList() {
+      const filter = document.getElementById('adm-filter-mock').value;
+      const qList = document.getElementById('adm-questions-list');
+      
+      const filtered = filter === "ALL" ? examPool : examPool.filter(q => q.mock === filter);
 
-      if (screenId === 'admin') fetchCloudData();
-      refreshIcons();
-    }
-
-    function refreshIcons() {
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function openAdminLoginModal() {
-      document.getElementById('modal-admin-auth').classList.remove('hidden');
-      document.getElementById('auth-login').value = '';
-      document.getElementById('auth-pass').value = '';
-      document.getElementById('auth-error-msg').classList.add('hidden');
-      refreshIcons();
-    }
-
-    function closeAdminLoginModal() {
-      document.getElementById('modal-admin-auth').classList.add('hidden');
-    }
-
-    function logoutAdmin() {
-      switchScreen('home');
-    }
-
-    function openModal(id) {
-      document.getElementById(`modal-${id}`).classList.remove('hidden');
-      refreshIcons();
-    }
-    function closeModal(id) {
-      document.getElementById(`modal-${id}`).classList.add('hidden');
-    }
-
-    async function launchExamSession() {
-      const name = document.getElementById('reg-name').value.trim();
-      if (!name) {
-        alert("Iltimos, ism va familiyangizni kiriting!");
+      if (filtered.length === 0) {
+        qList.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">Bu Mock-da hozircha savollar yo'q</div>`;
         return;
       }
 
+      qList.innerHTML = filtered.map((q, idx) => `
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex justify-between items-center text-xs">
+          <div class="truncate max-w-[70%]">
+            <span class="font-bold text-blue-400">[${q.mock || 'MOCK 1'}]</span> 
+            <span class="text-slate-300 ml-1">${q.question.replace(/\$/g, '')}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 font-mono text-[11px]">${q.correct}</span>
+            <button onclick="deleteQuestion('${q.firebaseKey || ''}', ${idx})" class="text-rose-500 hover:text-rose-400 font-bold px-2 py-1 bg-rose-950/40 rounded border border-rose-900/40">
+              O'chirish
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // TESTNI BOSHLASH
+    async function launchExamSession() {
+      const name = document.getElementById('reg-name').value.trim();
+      if (!name) return alert("Iltimos, ism va familiyangizni kiriting!");
+
+      const chosenMock = document.getElementById('reg-mock-select').value;
       await fetchCloudData();
 
-      const filter = document.getElementById('reg-filter-topic').value;
-      const tSec = parseInt(document.getElementById('reg-timer-select').value, 10);
-
-      studentData = { name, topic: filter };
-      document.getElementById('footer-user-name').textContent = name;
-
-      if (filter === 'all') {
-        activeQuestions = [...examPool];
-      } else {
-        activeQuestions = examPool.filter(q => q.topic === filter);
-        if (activeQuestions.length === 0) activeQuestions = [...examPool];
+      // Tanlangan Mock bo'yicha savollarni saralash
+      activeQuestions = examPool.filter(q => (q.mock || 'MOCK 1') === chosenMock);
+      if (activeQuestions.length === 0) {
+        return alert(`Hozirda ${chosenMock} ichida savollar mavjud emas! Ustoz panelidan savol qo'shing.`);
       }
+
+      studentData = { name, mock: chosenMock };
+      document.getElementById('footer-user-name').textContent = name;
+      document.getElementById('header-mock-title').textContent = `${chosenMock}: Section 2 (Math)`;
 
       currentQIdx = 0;
       userAnswers = {};
       flaggedMap = {};
       eliminatedOptions = {};
-      timerSeconds = tSec;
+      timerSeconds = 2100; // Qat'iy 35 daqiqa
 
       switchScreen('exam');
       loadCurrentQuestion();
@@ -596,21 +666,17 @@
       const q = activeQuestions[currentQIdx];
       document.getElementById('display-q-badge').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
       document.getElementById('nav-summary-label').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
-      document.getElementById('q-topic-tag').textContent = q.topic;
+      document.getElementById('q-topic-tag').textContent = q.mock || "MOCK";
       
       const qTextDiv = document.getElementById('q-text-content');
       qTextDiv.innerHTML = q.question;
 
-      if (window.MathJax) {
-        MathJax.typesetPromise([qTextDiv]).catch(() => {});
-      }
+      if (window.MathJax) MathJax.typesetPromise([qTextDiv]).catch(() => {});
 
       const bmBtn = document.getElementById('btn-mark-review');
-      if (flaggedMap[currentQIdx]) {
-        bmBtn.className = "flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded border border-amber-400";
-      } else {
-        bmBtn.className = "flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 px-2 py-1 rounded border border-transparent hover:border-slate-300";
-      }
+      bmBtn.className = flaggedMap[currentQIdx] 
+        ? "flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded border border-amber-400"
+        : "flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 px-2 py-1 rounded border border-transparent hover:border-slate-300";
 
       const mcqBox = document.getElementById('mcq-container');
       const sprBox = document.getElementById('spr-container');
@@ -633,7 +699,7 @@
 
           const optBtn = document.createElement('div');
           optBtn.className = `p-3.5 border rounded-xl flex items-center justify-between cursor-pointer transition ${
-            isChosen ? 'border-blue-900 bg-blue-50 ring-2 ring-blue-900 font-semibold' : 'border-slate-300 hover:bg-slate-50'
+            isChosen ? 'border-blue-900 bg-blue-50 ring-2 ring-blue-900 font-semibold text-slate-900' : 'border-slate-300 hover:bg-slate-50 text-slate-800'
           } ${isStriked ? 'strikethrough-opt' : ''}`;
 
           optBtn.innerHTML = `
@@ -657,9 +723,7 @@
           mcqBox.appendChild(optBtn);
         });
 
-        if (window.MathJax) {
-          MathJax.typesetPromise([mcqBox]).catch(() => {});
-        }
+        if (window.MathJax) MathJax.typesetPromise([mcqBox]).catch(() => {});
       }
 
       document.getElementById('btn-nav-prev').disabled = currentQIdx === 0;
@@ -734,9 +798,7 @@
         } ${isFilled ? 'bg-blue-100 text-blue-900' : 'bg-white text-slate-700'}`;
 
         btn.textContent = i + 1;
-        if (isFlag) {
-          btn.innerHTML += `<span class="absolute top-0.5 right-0.5 w-2 h-2 bg-amber-500 rounded-full"></span>`;
-        }
+        if (isFlag) btn.innerHTML += `<span class="absolute top-0.5 right-0.5 w-2 h-2 bg-amber-500 rounded-full"></span>`;
 
         btn.onclick = () => {
           currentQIdx = i;
@@ -800,93 +862,71 @@
       document.getElementById('final-correct-cnt').textContent = correct;
       document.getElementById('final-wrong-cnt').textContent = wrong;
       document.getElementById('final-accuracy').textContent = `${Math.round(rawRatio * 100)}%`;
+      document.getElementById('score-mock-badge').textContent = `${studentData.mock} natijangiz ustoz bazasiga saqlandi.`;
 
       const resultEntry = {
         name: studentData.name,
+        mock: studentData.mock,
         score: scaled,
         correct: `${correct}/${total}`,
         date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString().slice(0,5)
       };
 
-      await saveResultToCloud(resultEntry);
+      try {
+        await fetch(`${DB_URL}/results.json`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(resultEntry)
+        });
+      } catch (e) { console.error(e); }
+
+      examResults.unshift(resultEntry);
+      localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
 
       closeModal('desmos');
       closeModal('reference');
       switchScreen('score');
     }
 
-    function toggleAdmQuestionType(val) {
-      const mcqBox = document.getElementById('adm-mcq-fields');
-      if (val === 'spr') mcqBox.classList.add('hidden');
-      else mcqBox.classList.remove('hidden');
-    }
+    // ================= ADMIN BOSHQARUVI =================
+    function verifyAdminAccess() {
+      const u = document.getElementById('auth-login').value.trim();
+      const p = document.getElementById('auth-pass').value.trim();
 
-    async function handleCreateQuestion(e) {
-      e.preventDefault();
-      const topic = document.getElementById('adm-topic').value;
-      const type = document.getElementById('adm-type').value;
-      const text = document.getElementById('adm-text').value.trim();
-      const correct = document.getElementById('adm-correct').value.trim();
-
-      let options = [];
-      if (type === 'mcq') {
-        options = [
-          document.getElementById('adm-opt-a').value.trim(),
-          document.getElementById('adm-opt-b').value.trim(),
-          document.getElementById('adm-opt-c').value.trim(),
-          document.getElementById('adm-opt-d').value.trim()
-        ];
+      if (u === "uzmaster" && p === "uzmaster") {
+        document.getElementById('auth-error-msg').classList.add('hidden');
+        closeAdminLoginModal();
+        switchScreen('admin');
+      } else {
+        document.getElementById('auth-error-msg').classList.remove('hidden');
       }
-
-      const newQ = {
-        id: Date.now().toString(),
-        topic,
-        type,
-        question: text,
-        options,
-        correct
-      };
-
-      await saveQuestionToCloud(newQ);
-      alert("Savol doimiy bazada saqlandi!");
-      e.target.reset();
     }
 
     function renderAdminData() {
       document.getElementById('results-count-badge').textContent = examResults.length;
       const tbody = document.getElementById('adm-results-tbody');
       if (examResults.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="text-center p-3 text-slate-500">Hozircha natijalar mavjud emas</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-3 text-slate-500">Hozircha natijalar mavjud emas</td></tr>`;
       } else {
         tbody.innerHTML = examResults.map(r => `
           <tr class="border-b border-slate-800 hover:bg-slate-950">
             <td class="p-2 font-medium text-white">${r.name}</td>
+            <td class="p-2 font-bold text-purple-400">${r.mock || 'MOCK 1'}</td>
             <td class="p-2 font-bold text-blue-400 font-mono">${r.score}</td>
             <td class="p-2 text-slate-300">${r.correct}</td>
             <td class="p-2 text-slate-500">${r.date}</td>
           </tr>
         `).join('');
       }
-
-      document.getElementById('adm-q-count').textContent = examPool.length;
-      const qList = document.getElementById('adm-questions-list');
-      qList.innerHTML = examPool.map((q) => `
-        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex justify-between items-center text-xs">
-          <div class="truncate max-w-sm">
-            <span class="font-bold text-blue-400">[${q.topic}]</span> 
-            <span class="text-slate-300">${q.question.replace(/\$/g, '')}</span>
-          </div>
-          <span class="text-slate-500 font-mono text-[11px]">${q.correct}</span>
-        </div>
-      `).join('');
+      renderAdminQuestionsList();
     }
 
     function exportResultsCSV() {
       if (examResults.length === 0) return alert("Yuklab olish uchun natijalar yo'q!");
 
-      let csv = "Ism,SAT Ball,Togri/Jami,Sana\n";
+      let csv = "Ism,Mock,SAT Ball,Togri/Jami,Sana\n";
       examResults.forEach(r => {
-        csv += `"${r.name}",${r.score},"${r.correct}","${r.date}"\n`;
+        csv += `"${r.name}","${r.mock || 'MOCK 1'}",${r.score},"${r.correct}","${r.date}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -896,6 +936,35 @@
       link.click();
     }
 
+    function toggleAdmQuestionType(val) {
+      const mcqBox = document.getElementById('adm-mcq-fields');
+      if (val === 'spr') mcqBox.classList.add('hidden');
+      else mcqBox.classList.remove('hidden');
+    }
+
+    function switchScreen(screenId) {
+      ['home', 'exam', 'score', 'admin'].forEach(s => {
+        document.getElementById(`screen-${s}`).classList.add('hidden');
+      });
+      document.getElementById(`screen-${screenId}`).classList.remove('hidden');
+      if (screenId === 'admin') fetchCloudData();
+      refreshIcons();
+    }
+
+    function refreshIcons() { if (window.lucide) lucide.createIcons(); }
+    function openAdminLoginModal() {
+      document.getElementById('modal-admin-auth').classList.remove('hidden');
+      document.getElementById('auth-login').value = '';
+      document.getElementById('auth-pass').value = '';
+      document.getElementById('auth-error-msg').classList.add('hidden');
+      refreshIcons();
+    }
+    function closeAdminLoginModal() { document.getElementById('modal-admin-auth').classList.add('hidden'); }
+    function logoutAdmin() { switchScreen('home'); }
+    function openModal(id) { document.getElementById(`modal-${id}`).classList.remove('hidden'); refreshIcons(); }
+    function closeModal(id) { document.getElementById(`modal-${id}`).classList.add('hidden'); }
+
+    // Suzuvchi Desmos
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
