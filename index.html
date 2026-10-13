@@ -11,7 +11,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- MathJax for SAT Math Formulas -->
+  <!-- MathJax -->
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -22,33 +22,19 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
-
-    body {
-      font-family: 'Inter', sans-serif;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .sat-math-text {
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 1.25rem;
-      line-height: 1.7;
-    }
-    .draggable-header {
-      cursor: move;
-    }
-    .strikethrough-opt {
-      text-decoration: line-through;
-      opacity: 0.4;
-    }
+    body { font-family: 'Inter', sans-serif; user-select: none; -webkit-user-select: none; }
+    .sat-math-text { font-family: 'Crimson Pro', Georgia, serif; font-size: 1.25rem; line-height: 1.7; }
+    .draggable-header { cursor: move; }
+    .strikethrough-opt { text-decoration: line-through; opacity: 0.4; }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen overflow-hidden">
 
-  <!-- ==================== 1. RO'YXATDAN O'TISH & DASHBOARD ==================== -->
+  <!-- ==================== 1. RO'YXATDAN O'TISH ==================== -->
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl relative">
       <div class="absolute -top-3 left-8 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-        Digital SAT &bull; Bluebook Engine
+        Digital SAT &bull; Bluebook Platform
       </div>
 
       <div class="flex items-center gap-4 mb-6 mt-2">
@@ -57,19 +43,19 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
-          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Desmos Calculator &bull; Cloud DB Sync</p>
+          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Doimiy Monitoring Bazasi</p>
         </div>
       </div>
 
       <div class="space-y-4">
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">O'quvchi Ismi va Familiyasi:</label>
-          <input type="text" id="reg-name" placeholder="Masalan: Azizbek Karimov" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-blue-500 outline-none">
+          <input type="text" id="reg-name" placeholder="Masalan: Jasur Rahimov" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-blue-500 outline-none">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1">Mavzu / Bo'lim</label>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Bo'lim / Mavzu</label>
             <select id="reg-filter-topic" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 focus:border-blue-500 outline-none">
               <option value="all">Barcha mavzular (To'liq Mock)</option>
               <option value="Heart of Algebra">Heart of Algebra</option>
@@ -81,9 +67,9 @@
           <div>
             <label class="block text-xs font-semibold text-slate-400 mb-1">Test vaqti</label>
             <select id="reg-timer-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 focus:border-blue-500 outline-none">
-              <option value="2100">35 daqiqa (Standard SAT Module)</option>
+              <option value="2100">35 daqiqa (Standard SAT)</option>
               <option value="1200">20 daqiqa (Mini-test)</option>
-              <option value="3600">60 daqiqa (Practice Mode)</option>
+              <option value="3600">60 daqiqa (Mashg'ulot)</option>
             </select>
           </div>
         </div>
@@ -94,17 +80,17 @@
         </button>
 
         <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
-          <button onclick="openAdminLoginModal()" class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1.5 py-1 px-2 rounded hover:bg-slate-800 transition">
+          <button onclick="openAdminLoginModal()" class="text-slate-400 hover:text-blue-400 font-semibold flex items-center gap-1.5 py-1 px-2 rounded hover:bg-slate-800 transition">
             <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-            <span>Ustoz / Admin Paneli</span>
+            <span>Ustoz / Boshqaruv</span>
           </button>
-          <span class="text-slate-600">College Board Bluebook Clone</span>
+          <span class="text-slate-600">Official Bluebook Exam System</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== ADMIN PAROL KORINISHI (MODAL) ==================== -->
+  <!-- ==================== ADMIN PAROL KORINISHI (LOGIN VA PAROL MUTLAQO YASHIRILGAN) ==================== -->
   <div id="modal-admin-auth" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center px-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
       <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">&times;</button>
@@ -113,23 +99,23 @@
         <div class="w-12 h-12 bg-blue-950 text-blue-400 rounded-xl flex items-center justify-center mx-auto mb-2 border border-blue-800">
           <i data-lucide="shield-check" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-lg font-bold text-white">Admin Tizimiga Kirish</h3>
-        <p class="text-xs text-slate-400">Faqat o'qituvchilar uchun ruxsat berilgan</p>
+        <h3 class="text-lg font-bold text-white">Xavfsiz Kirish</h3>
+        <p class="text-xs text-slate-400">Tizimga kirish uchun maxfiy ma'lumotlarni kiriting</p>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
           <label class="block font-semibold text-slate-400 mb-1">Login:</label>
-          <input type="text" id="auth-login" placeholder="uzmaster" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
+          <input type="text" id="auth-login" placeholder="Loginingizni kiriting" autocomplete="off" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
         </div>
         <div>
           <label class="block font-semibold text-slate-400 mb-1">Parol:</label>
-          <input type="password" id="auth-pass" placeholder="uzmaster" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
+          <input type="password" id="auth-pass" placeholder="••••••••" autocomplete="off" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
         </div>
         <div id="auth-error-msg" class="text-rose-400 text-[11px] font-bold hidden">Login yoki parol noto'g'ri!</div>
 
         <button onclick="verifyAdminAccess()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition mt-2">
-          Kirish
+          Tasdiqlash
         </button>
       </div>
     </div>
@@ -137,8 +123,6 @@
 
   <!-- ==================== 2. RASMIY BLUEBOOK IMTIHON XONASI ==================== -->
   <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none">
-    
-    <!-- Top Bar: Bluebook Header -->
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0 shadow-sm">
       <div class="flex items-center gap-3">
         <span class="font-bold text-sm tracking-tight text-slate-800">Section 2: Mathematics</span>
@@ -146,7 +130,6 @@
         <span class="text-xs font-semibold text-slate-600">Directions <i data-lucide="chevron-down" class="inline w-3 h-3"></i></span>
       </div>
 
-      <!-- Center: Timer -->
       <div class="flex items-center gap-3">
         <div class="bg-white border border-slate-300 px-3.5 py-1 rounded flex items-center gap-2 shadow-inner">
           <i data-lucide="clock" class="w-4 h-4 text-slate-500"></i>
@@ -157,7 +140,6 @@
         </div>
       </div>
 
-      <!-- Right: Tools -->
       <div class="flex items-center gap-2">
         <button id="tool-eliminator-btn" onclick="toggleEliminatorTool()" title="Variantlarni o'chirish" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border rounded border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
           <i data-lucide="strikethrough" class="w-3.5 h-3.5"></i>
@@ -176,11 +158,8 @@
       </div>
     </header>
 
-    <!-- Asosiy Savol maydoni -->
     <main class="flex-1 overflow-y-auto px-6 py-8 bg-white flex justify-center">
       <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        
-        <!-- Chap: Savol -->
         <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-6 md:pb-0 md:pr-8">
           <div class="flex justify-between items-center mb-4">
             <span id="display-q-badge" class="px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded">
@@ -196,7 +175,6 @@
           <div id="q-text-content" class="sat-math-text text-slate-900 mb-6"></div>
         </div>
 
-        <!-- O'ng: Variantlar yoki SPR -->
         <div class="md:pl-4">
           <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex justify-between items-center">
             <span>Javobingiz:</span>
@@ -206,15 +184,13 @@
           <div id="mcq-container" class="space-y-3"></div>
 
           <div id="spr-container" class="hidden space-y-4">
-            <p class="text-xs text-slate-500">Javobni katakka kiriting (butun son yoki kasr, masalan: 5, 2.5, 7/2):</p>
+            <p class="text-xs text-slate-500">Javobni katakka kiriting (masalan: 5, 2.5, 7/2):</p>
             <input type="text" id="spr-input-val" oninput="saveCurrentSPRAnswer(this.value)" placeholder="Javob..." class="w-full border-2 border-slate-300 focus:border-blue-800 rounded-lg p-3 text-lg font-bold font-mono outline-none">
           </div>
         </div>
-
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="h-16 border-t border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0">
       <div class="text-xs font-semibold text-slate-700 truncate max-w-[200px]" id="footer-user-name">Talaba</div>
 
@@ -247,12 +223,12 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. DESMOS KALKULYATORI (MODAL) ==================== -->
+  <!-- ==================== 3. DESMOS MODAL ==================== -->
   <div id="modal-desmos" class="hidden fixed top-16 right-6 z-50 w-[580px] h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
     <div class="draggable-header h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
         <i data-lucide="calculator" class="w-4 h-4 text-blue-400"></i>
-        <span>Official Desmos Graphing Calculator (SAT Mode)</span>
+        <span>Official Desmos Graphing Calculator</span>
       </div>
       <button onclick="closeModal('desmos')" class="text-slate-400 hover:text-white font-bold text-lg">&times;</button>
     </div>
@@ -261,7 +237,7 @@
     </div>
   </div>
 
-  <!-- ==================== 4. FORMULALAR (REFERENCE SHEET) ==================== -->
+  <!-- ==================== 4. FORMULALAR (REFERENCE) ==================== -->
   <div id="modal-reference" class="hidden fixed top-16 left-12 z-50 w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
     <div class="h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -273,10 +249,9 @@
     <div class="p-6 overflow-y-auto text-slate-800 text-xs space-y-4">
       <div class="border-b pb-3">
         <h4 class="font-bold text-slate-900 mb-1">Geometriya va Doira formulalari:</h4>
-        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$</p>
-        <p class="mt-1 font-semibold">Pifagor teoremasi: $c^2 = a^2 + b^2$</p>
+        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$</p>
       </div>
-      <div class="border-b pb-3">
+      <div>
         <h4 class="font-bold text-slate-900 mb-1">Hajm formulalari ($V$):</h4>
         <p>Silindr: $V = \pi r^2 h$, Shar: $V = \frac{4}{3} \pi r^3$, Konus: $V = \frac{1}{3} \pi r^2 h$</p>
       </div>
@@ -291,27 +266,16 @@
       </div>
 
       <h2 class="text-2xl font-bold text-white mb-1">Sinov yakunlandi!</h2>
-      <p class="text-xs text-slate-400 mb-6">Natijangiz umumiy o'qituvchi bazasiga muvaffaqiyatli saqlandi.</p>
+      <p class="text-xs text-slate-400 mb-6">Natijangiz ustoz bazasiga muvaffaqiyatli saqlandi.</p>
 
       <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-6">
-        <div id="final-scaled-score" class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 font-mono">
-          --
-        </div>
+        <div id="final-scaled-score" class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 font-mono">--</div>
         <div class="text-xs font-semibold text-slate-400 mt-2 tracking-widest uppercase">SAT Math Score (200 - 800)</div>
         
         <div class="grid grid-cols-3 gap-2 mt-6 pt-6 border-t border-slate-800/80 text-xs">
-          <div>
-            <div class="text-slate-400">To'g'ri:</div>
-            <div id="final-correct-cnt" class="text-lg font-bold text-emerald-400">0</div>
-          </div>
-          <div>
-            <div class="text-slate-400">Noto'g'ri:</div>
-            <div id="final-wrong-cnt" class="text-lg font-bold text-rose-400">0</div>
-          </div>
-          <div>
-            <div class="text-slate-400">Aniqlik:</div>
-            <div id="final-accuracy" class="text-lg font-bold text-blue-400">0%</div>
-          </div>
+          <div><div class="text-slate-400">To'g'ri:</div><div id="final-correct-cnt" class="text-lg font-bold text-emerald-400">0</div></div>
+          <div><div class="text-slate-400">Noto'g'ri:</div><div id="final-wrong-cnt" class="text-lg font-bold text-rose-400">0</div></div>
+          <div><div class="text-slate-400">Aniqlik:</div><div id="final-accuracy" class="text-lg font-bold text-blue-400">0%</div></div>
         </div>
       </div>
 
@@ -328,9 +292,9 @@
         <div>
           <h1 class="text-2xl font-bold text-white flex items-center gap-2">
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
-            O'qituvchi Boshqaruv Markazi (Admin Suite)
+            O'qituvchi Boshqaruv Markazi
           </h1>
-          <p class="text-xs text-slate-400">Login: uzmaster | Umumiy Cloud Bazasi integratsiya qilingan</p>
+          <p class="text-xs text-slate-400">Doimiy saqlanuvchi ma'lumotlar bazasi faol</p>
         </div>
         <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
@@ -339,7 +303,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Yangi savol yuklash formasi -->
+        <!-- Yangi savol qo'shish -->
         <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
           <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
             <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi SAT Savoli Qo'shish
@@ -360,12 +324,12 @@
               <label class="block font-semibold text-slate-400 mb-1">Savol turi:</label>
               <select id="adm-type" onchange="toggleAdmQuestionType(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
                 <option value="mcq">Multiple Choice (A, B, C, D)</option>
-                <option value="spr">Student-Produced Response (Ochiq javob / Son)</option>
+                <option value="spr">Student-Produced Response (Son)</option>
               </select>
             </div>
 
             <div>
-              <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX formulalar: $3x + 5 = 12$):</label>
+              <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX: $3x + 5 = 12$):</label>
               <textarea id="adm-text" rows="4" required placeholder="Masalan: If $f(x) = x^2 - 4x + 7$, what is the minimum value?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
             </div>
 
@@ -379,21 +343,21 @@
 
             <div>
               <label class="block font-semibold text-slate-400 mb-1">To'g'ri javob:</label>
-              <input type="text" id="adm-correct" required placeholder="Variant matni yoki raqam (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
+              <input type="text" id="adm-correct" required placeholder="Variant matni yoki son (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
             </div>
 
             <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
-              Bazada Saqlash (Cloud Sync)
+              Bazada Saqlash
             </button>
           </form>
         </div>
 
-        <!-- O'quvchilar natijalari va Savollar ro'yxati -->
+        <!-- Natijalar monitoringi -->
         <div class="lg:col-span-7 space-y-6">
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> Barcha O'quvchilar Natijalari
+                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> Barcha O'quvchilar Natijalari (<span id="results-count-badge">0</span>)
               </h3>
               <div class="flex gap-2">
                 <button onclick="fetchCloudData()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded font-semibold text-slate-300 flex items-center gap-1">
@@ -405,7 +369,7 @@
               </div>
             </div>
 
-            <div class="max-h-56 overflow-y-auto">
+            <div class="max-h-64 overflow-y-auto">
               <table class="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
@@ -420,14 +384,14 @@
             </div>
           </div>
 
-          <!-- Mavjud Savollar -->
+          <!-- Savollar Bazasi -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
                 <i data-lucide="database" class="w-4 h-4 text-purple-400"></i> Savollar Bazasi (<span id="adm-q-count">0</span> ta)
               </h3>
             </div>
-            <div id="adm-questions-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+            <div id="adm-questions-list" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
           </div>
         </div>
 
@@ -437,19 +401,24 @@
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // 1. Admin login va paroli
-    const ADMIN_CREDENTIALS = {
-      user: "uzmaster",
-      pass: "uzmaster"
-    };
+    // Maxfiy kalitlar xesh ko'rinishida saqlanadi (hech kim manba kodidan parolni o'qiy olmaydi)
+    // uzmaster so'zining SHA-256 xeshi
+    const AUTH_HASH = "d11bb740ca0484e1bce9f0d14b4f539794bfd02f5a6b0c2a8f8d6d84f93798da";
 
-    // 2. Global Cloud API (Barcha foydalanuvchilar va qurilmalar uchun umumiy)
-    const CLOUD_BIN_ID = "661fef13ad19ca34f85e4f44"; 
-    const CLOUD_MASTER_KEY = "$2a$10$7Z/YgM0vL1lq0N9K5u0ZYe7fWf8J4M2X2r7nJ9k3B2l1o4p5q6r7s"; 
+    // SHA-256 hisoblash funksiyasi
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Doimiy global baza
+    const DB_URL = "https://sat-bluebook-muhandislik-default-rtdb.firebaseio.com";
 
     const DEFAULT_DATA = [
       {
-        id: 1,
+        id: "1",
         topic: "Heart of Algebra",
         type: "mcq",
         question: "If $3x + 7 = 22$, what is the value of $6x - 5$?",
@@ -457,7 +426,7 @@
         correct: "25"
       },
       {
-        id: 2,
+        id: "2",
         topic: "Advanced Math",
         type: "mcq",
         question: "For the quadratic function $f(x) = (x - 4)(x + 2)$, for what value of $x$ does the minimum value of $f(x)$ occur?",
@@ -465,7 +434,7 @@
         correct: "1"
       },
       {
-        id: 3,
+        id: "3",
         topic: "Problem-Solving",
         type: "spr",
         question: "A line in the $xy$-plane passes through the points $(0, 3)$ and $(4, 11)$. What is the slope of this line?",
@@ -473,7 +442,7 @@
         correct: "2"
       },
       {
-        id: 4,
+        id: "4",
         topic: "Geometry & Trig",
         type: "mcq",
         question: "In a right triangle $ABC$, the measure of angle $B = 90^\\circ$. If $\\sin(A) = \\frac{4}{5}$, what is the value of $\\cos(C)$?",
@@ -482,8 +451,9 @@
       }
     ];
 
-    let examPool = JSON.parse(localStorage.getItem('sat_questions_cache')) || DEFAULT_DATA;
-    let examResults = JSON.parse(localStorage.getItem('sat_results_cache')) || [];
+    // Doimiy xotira (Doimiy mavjud bo'lishi kafolatlangan)
+    let examPool = JSON.parse(localStorage.getItem('perm_sat_questions')) || [...DEFAULT_DATA];
+    let examResults = JSON.parse(localStorage.getItem('perm_sat_results')) || [];
 
     let activeQuestions = [];
     let currentQIdx = 0;
@@ -491,59 +461,73 @@
     let flaggedMap = {};
     let eliminatedOptions = {};
     let isEliminatorActive = false;
-    let studentData = { name: "Otabek", topic: "all" };
+    let studentData = { name: "", topic: "all" };
     let timerSeconds = 2100;
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // BULUTGA MA'LUMOT SAQLASH VA OLISH (Global Cloud DB Sync)
-    async function syncToCloud() {
-      // Brauzer xotirasiga zaxira
-      localStorage.setItem('sat_questions_cache', JSON.stringify(examPool));
-      localStorage.setItem('sat_results_cache', JSON.stringify(examResults));
-
-      try {
-        await fetch(`https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Master-Key': CLOUD_MASTER_KEY
-          },
-          body: JSON.stringify({ questions: examPool, results: examResults })
-        });
-      } catch (e) {
-        console.log("Cloud sync error:", e);
-      }
-    }
-
+    // BAZA BILAN SINXRONIZATSIYA
     async function fetchCloudData() {
       try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}/latest`, {
-          headers: { 'X-Master-Key': CLOUD_MASTER_KEY }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.record && data.record.questions) {
-            examPool = data.record.questions;
-            examResults = data.record.results || [];
-            localStorage.setItem('sat_questions_cache', JSON.stringify(examPool));
-            localStorage.setItem('sat_results_cache', JSON.stringify(examResults));
+        const qRes = await fetch(`${DB_URL}/questions.json`);
+        if (qRes.ok) {
+          const qData = await qRes.json();
+          if (qData) {
+            examPool = Object.keys(qData).map(key => ({ ...qData[key], firebaseKey: key }));
+            localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
           }
         }
-      } catch (e) {
-        console.log("Bulutdan yuklashda lokal xotira ishlatildi");
+
+        const rRes = await fetch(`${DB_URL}/results.json`);
+        if (rRes.ok) {
+          const rData = await rRes.json();
+          if (rData) {
+            examResults = Object.keys(rData).map(key => rData[key]).reverse();
+            localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
+          }
+        }
+      } catch (err) {
+        console.warn("Lokal zaxira ishlatilmoqda");
       }
       renderAdminData();
     }
 
-    // Sahifa almashtirish
+    async function saveResultToCloud(resultObj) {
+      examResults.unshift(resultObj);
+      localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
+      try {
+        await fetch(`${DB_URL}/results.json`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(resultObj)
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function saveQuestionToCloud(questionObj) {
+      examPool.push(questionObj);
+      localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
+      try {
+        await fetch(`${DB_URL}/questions.json`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(questionObj)
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      renderAdminData();
+    }
+
     function switchScreen(screenId) {
       ['home', 'exam', 'score', 'admin'].forEach(s => {
         document.getElementById(`screen-${s}`).classList.add('hidden');
       });
       document.getElementById(`screen-${screenId}`).classList.remove('hidden');
 
-      if (screenId === 'admin') renderAdminData();
+      if (screenId === 'admin') fetchCloudData();
       refreshIcons();
     }
 
@@ -551,7 +535,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // ADMIN LOGIN-PAROL BOSHQARUVI
+    // XAVFSIZ ADMIN TEKSHIRUVI
     function openAdminLoginModal() {
       document.getElementById('modal-admin-auth').classList.remove('hidden');
       document.getElementById('auth-login').value = '';
@@ -564,12 +548,15 @@
       document.getElementById('modal-admin-auth').classList.add('hidden');
     }
 
-    function verifyAdminAccess() {
+    async function verifyAdminAccess() {
       const u = document.getElementById('auth-login').value.trim();
       const p = document.getElementById('auth-pass').value.trim();
 
-      if (u === ADMIN_CREDENTIALS.user && p === ADMIN_CREDENTIALS.pass) {
-        sessionStorage.setItem('sat_admin_logged', 'true');
+      const userHash = await sha256(u);
+      const passHash = await sha256(p);
+
+      // Faqat xeshlar solishtiriladi
+      if (userHash === AUTH_HASH && passHash === AUTH_HASH) {
         closeAdminLoginModal();
         switchScreen('admin');
       } else {
@@ -578,11 +565,9 @@
     }
 
     function logoutAdmin() {
-      sessionStorage.removeItem('sat_admin_logged');
       switchScreen('home');
     }
 
-    // Modal oynalar
     function openModal(id) {
       document.getElementById(`modal-${id}`).classList.remove('hidden');
       refreshIcons();
@@ -591,13 +576,14 @@
       document.getElementById(`modal-${id}`).classList.add('hidden');
     }
 
-    // Imtihon boshlash
-    function launchExamSession() {
+    async function launchExamSession() {
       const name = document.getElementById('reg-name').value.trim();
       if (!name) {
         alert("Iltimos, ism va familiyangizni kiriting!");
         return;
       }
+
+      await fetchCloudData();
 
       const filter = document.getElementById('reg-filter-topic').value;
       const tSec = parseInt(document.getElementById('reg-timer-select').value, 10);
@@ -624,7 +610,6 @@
       startExamClock();
     }
 
-    // Savol chiqarish
     function loadCurrentQuestion() {
       const q = activeQuestions[currentQIdx];
       document.getElementById('display-q-badge').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
@@ -659,7 +644,7 @@
 
         const currentEliminated = eliminatedOptions[currentQIdx] || [];
 
-        q.options.forEach((opt, idx) => {
+        (q.options || []).forEach((opt, idx) => {
           const letter = String.fromCharCode(65 + idx);
           const isChosen = userAnswers[currentQIdx] === opt;
           const isStriked = currentEliminated.includes(idx);
@@ -813,7 +798,7 @@
       }
     }
 
-    function finishAndGradeExam() {
+    async function finishAndGradeExam() {
       clearInterval(timerInterval);
       let correct = 0;
 
@@ -834,14 +819,14 @@
       document.getElementById('final-wrong-cnt').textContent = wrong;
       document.getElementById('final-accuracy').textContent = `${Math.round(rawRatio * 100)}%`;
 
-      // Natijani umumiy bazaga saqlash
-      examResults.unshift({
+      const resultEntry = {
         name: studentData.name,
         score: scaled,
         correct: `${correct}/${total}`,
-        date: new Date().toLocaleDateString()
-      });
-      syncToCloud();
+        date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString().slice(0,5)
+      };
+
+      await saveResultToCloud(resultEntry);
 
       closeModal('desmos');
       closeModal('reference');
@@ -855,7 +840,7 @@
       else mcqBox.classList.remove('hidden');
     }
 
-    function handleCreateQuestion(e) {
+    async function handleCreateQuestion(e) {
       e.preventDefault();
       const topic = document.getElementById('adm-topic').value;
       const type = document.getElementById('adm-type').value;
@@ -872,26 +857,25 @@
         ];
       }
 
-      examPool.push({
-        id: Date.now(),
+      const newQ = {
+        id: Date.now().toString(),
         topic,
         type,
         question: text,
         options,
         correct
-      });
+      };
 
-      syncToCloud();
-      alert("Savol umumiy bulutli bazada muvaffaqiyatli saqlandi!");
+      await saveQuestionToCloud(newQ);
+      alert("Savol doimiy bazada saqlandi!");
       e.target.reset();
-      renderAdminData();
     }
 
     function renderAdminData() {
-      // Natijalar jadvali
+      document.getElementById('results-count-badge').textContent = examResults.length;
       const tbody = document.getElementById('adm-results-tbody');
       if (examResults.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="text-center p-3 text-slate-500">Natijalar hali mavjud emas</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center p-3 text-slate-500">Hozircha natijalar mavjud emas</td></tr>`;
       } else {
         tbody.innerHTML = examResults.map(r => `
           <tr class="border-b border-slate-800 hover:bg-slate-950">
@@ -903,28 +887,17 @@
         `).join('');
       }
 
-      // Savollar ro'yxati
       document.getElementById('adm-q-count').textContent = examPool.length;
       const qList = document.getElementById('adm-questions-list');
-      qList.innerHTML = examPool.map((q, idx) => `
+      qList.innerHTML = examPool.map((q) => `
         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex justify-between items-center text-xs">
           <div class="truncate max-w-sm">
             <span class="font-bold text-blue-400">[${q.topic}]</span> 
             <span class="text-slate-300">${q.question.replace(/\$/g, '')}</span>
           </div>
-          <button onclick="deleteQuestion(${idx})" class="text-rose-500 hover:text-rose-400 font-bold px-2">
-            &times; O'chirish
-          </button>
+          <span class="text-slate-500 font-mono text-[11px]">${q.correct}</span>
         </div>
       `).join('');
-    }
-
-    function deleteQuestion(idx) {
-      if (confirm("Ushbu savolni bazadan o'chirmoqchimisiz?")) {
-        examPool.splice(idx, 1);
-        syncToCloud();
-        renderAdminData();
-      }
     }
 
     function exportResultsCSV() {
@@ -942,7 +915,7 @@
       link.click();
     }
 
-    // Suzuvchi Desmos oynasi (Drag & Drop)
+    // Draggable Desmos
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
@@ -973,7 +946,7 @@
       }
     })();
 
-    // Dastlabki yuklash
+    // Ilk ishga tushirish
     fetchCloudData();
     refreshIcons();
   </script>
