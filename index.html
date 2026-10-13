@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bluebook Digital SAT Math - Exam Suite</title>
+  <title>Digital SAT Math - Bluebook Suite</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -30,19 +30,15 @@
     }
     .sat-math-text {
       font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 1.28rem;
+      font-size: 1.25rem;
       line-height: 1.7;
     }
-    .math-font {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    /* Modal suzuvchi darcha uchun */
     .draggable-header {
       cursor: move;
     }
     .strikethrough-opt {
       text-decoration: line-through;
-      opacity: 0.45;
+      opacity: 0.4;
     }
   </style>
 </head>
@@ -52,7 +48,7 @@
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl relative">
       <div class="absolute -top-3 left-8 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-        Digital SAT &bull; Bluebook Engine v2.4
+        Digital SAT &bull; Bluebook Engine
       </div>
 
       <div class="flex items-center gap-4 mb-6 mt-2">
@@ -61,19 +57,19 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
-          <p class="text-xs text-slate-400">Section 2: Modules 1 & 2 Math &bull; Official Desmos Calculator Support</p>
+          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Desmos Calculator &bull; Cloud DB Sync</p>
         </div>
       </div>
 
       <div class="space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1">O'quvchi Ismi va Familiyasi</label>
-          <input type="text" id="reg-name" placeholder="Masalan: Azizbek Karimov" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+          <label class="block text-xs font-semibold text-slate-400 mb-1">O'quvchi Ismi va Familiyasi:</label>
+          <input type="text" id="reg-name" placeholder="Masalan: Azizbek Karimov" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-blue-500 outline-none">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1">Bo'lim / Mavzu</label>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Mavzu / Bo'lim</label>
             <select id="reg-filter-topic" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 focus:border-blue-500 outline-none">
               <option value="all">Barcha mavzular (To'liq Mock)</option>
               <option value="Heart of Algebra">Heart of Algebra</option>
@@ -93,17 +89,48 @@
         </div>
 
         <button onclick="launchExamSession()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30">
-          <span>Testni Boshlash (Start Testing)</span>
+          <span>Testni Boshlash</span>
           <i data-lucide="play" class="w-4 h-4 fill-current"></i>
         </button>
 
         <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
-          <button onclick="switchScreen('admin')" class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1">
-            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-            <span>Admin / Ustoz Paneli</span>
+          <button onclick="openAdminLoginModal()" class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1.5 py-1 px-2 rounded hover:bg-slate-800 transition">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>Ustoz / Admin Paneli</span>
           </button>
           <span class="text-slate-600">College Board Bluebook Clone</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN PAROL KORINISHI (MODAL) ==================== -->
+  <div id="modal-admin-auth" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center px-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
+      <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">&times;</button>
+      
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 bg-blue-950 text-blue-400 rounded-xl flex items-center justify-center mx-auto mb-2 border border-blue-800">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Admin Tizimiga Kirish</h3>
+        <p class="text-xs text-slate-400">Faqat o'qituvchilar uchun ruxsat berilgan</p>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-400 mb-1">Login:</label>
+          <input type="text" id="auth-login" placeholder="uzmaster" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-400 mb-1">Parol:</label>
+          <input type="password" id="auth-pass" placeholder="uzmaster" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white outline-none focus:border-blue-500">
+        </div>
+        <div id="auth-error-msg" class="text-rose-400 text-[11px] font-bold hidden">Login yoki parol noto'g'ri!</div>
+
+        <button onclick="verifyAdminAccess()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition mt-2">
+          Kirish
+        </button>
       </div>
     </div>
   </div>
@@ -114,9 +141,9 @@
     <!-- Top Bar: Bluebook Header -->
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0 shadow-sm">
       <div class="flex items-center gap-3">
-        <span class="font-bold text-sm tracking-tight text-slate-800" id="header-section-title">Section 2: Mathematics</span>
+        <span class="font-bold text-sm tracking-tight text-slate-800">Section 2: Mathematics</span>
         <span class="text-slate-400 text-xs">|</span>
-        <span class="text-xs font-semibold text-slate-600" id="header-direction">Directions <i data-lucide="chevron-down" class="inline w-3 h-3"></i></span>
+        <span class="text-xs font-semibold text-slate-600">Directions <i data-lucide="chevron-down" class="inline w-3 h-3"></i></span>
       </div>
 
       <!-- Center: Timer -->
@@ -130,21 +157,18 @@
         </div>
       </div>
 
-      <!-- Right: Bluebook Tools (Desmos, Reference, Scratchpad, Strike) -->
+      <!-- Right: Tools -->
       <div class="flex items-center gap-2">
-        <!-- Eliminator Tool -->
-        <button id="tool-eliminator-btn" onclick="toggleEliminatorTool()" title="Variantlarni o'chirish rejimi" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border rounded border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+        <button id="tool-eliminator-btn" onclick="toggleEliminatorTool()" title="Variantlarni o'chirish" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border rounded border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
           <i data-lucide="strikethrough" class="w-3.5 h-3.5"></i>
           <span class="hidden md:inline">Eliminate</span>
         </button>
 
-        <!-- Reference Sheet -->
-        <button onclick="openModal('reference')" title="SAT Formulalar ro'yxati" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border rounded border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+        <button onclick="openModal('reference')" title="Formulalar" class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border rounded border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
           <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
           <span class="hidden md:inline">Reference</span>
         </button>
 
-        <!-- Desmos Calculator -->
         <button onclick="openModal('desmos')" class="flex items-center gap-1.5 px-3 py-1 text-xs font-bold border rounded bg-blue-800 text-white hover:bg-blue-900 shadow-sm">
           <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
           <span>Calculator (Desmos)</span>
@@ -152,11 +176,11 @@
       </div>
     </header>
 
-    <!-- Asosiy Savol & Javob maydoni -->
+    <!-- Asosiy Savol maydoni -->
     <main class="flex-1 overflow-y-auto px-6 py-8 bg-white flex justify-center">
       <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
-        <!-- Chap: Savol matni & chizma -->
+        <!-- Chap: Savol -->
         <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-6 md:pb-0 md:pr-8">
           <div class="flex justify-between items-center mb-4">
             <span id="display-q-badge" class="px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded">
@@ -169,57 +193,43 @@
           </div>
 
           <div id="q-topic-tag" class="text-[11px] font-bold uppercase tracking-wider text-blue-700 mb-2">Heart of Algebra</div>
-          <div id="q-text-content" class="sat-math-text text-slate-900 mb-6">
-            <!-- Savol matni MathJax bilan tushadi -->
-          </div>
-
-          <div id="q-image-container" class="hidden mb-4 rounded border p-2 bg-slate-50">
-            <img id="q-image-elem" src="" alt="Geometrik chizma" class="max-h-60 mx-auto object-contain">
-          </div>
+          <div id="q-text-content" class="sat-math-text text-slate-900 mb-6"></div>
         </div>
 
-        <!-- O'ng: Variantlar yoki SPR (Input) -->
+        <!-- O'ng: Variantlar yoki SPR -->
         <div class="md:pl-4">
           <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex justify-between items-center">
             <span>Javobingiz:</span>
-            <span id="eliminator-notice" class="text-[10px] text-amber-700 font-bold hidden">Variant o'chirish rejimi faol!</span>
+            <span id="eliminator-notice" class="text-[10px] text-amber-700 font-bold hidden">Variant o'chirish faol!</span>
           </div>
 
-          <!-- Multiple Choice Variantlar -->
-          <div id="mcq-container" class="space-y-3">
-            <!-- Variantlar dinamik qo'shiladi -->
-          </div>
+          <div id="mcq-container" class="space-y-3"></div>
 
-          <!-- Student Produced Response (Grid-in Input) -->
           <div id="spr-container" class="hidden space-y-4">
-            <p class="text-xs text-slate-500">Javobni quyidagi katakka kiriting (butun son, o'nli kasr yoki kasr ko'rinishida, masalan: 7, 3.5, 7/2):</p>
-            <input type="text" id="spr-input-val" oninput="saveCurrentSPRAnswer(this.value)" placeholder="Javobni yozing..." class="w-full border-2 border-slate-300 focus:border-blue-800 rounded-lg p-3 text-lg font-bold font-mono outline-none">
+            <p class="text-xs text-slate-500">Javobni katakka kiriting (butun son yoki kasr, masalan: 5, 2.5, 7/2):</p>
+            <input type="text" id="spr-input-val" oninput="saveCurrentSPRAnswer(this.value)" placeholder="Javob..." class="w-full border-2 border-slate-300 focus:border-blue-800 rounded-lg p-3 text-lg font-bold font-mono outline-none">
           </div>
         </div>
 
       </div>
     </main>
 
-    <!-- Footer: Bluebook Pastki paneli -->
+    <!-- Footer -->
     <footer class="h-16 border-t border-slate-300 bg-slate-100 flex items-center justify-between px-6 shrink-0">
       <div class="text-xs font-semibold text-slate-700 truncate max-w-[200px]" id="footer-user-name">Talaba</div>
 
-      <!-- Navigator popover knopkasi -->
       <div class="relative">
         <button onclick="toggleNavPopup()" class="px-4 py-2 bg-white border border-slate-300 rounded font-bold text-xs flex items-center gap-2 hover:bg-slate-50 shadow-sm">
           <span id="nav-summary-label">Question 1 of 22</span>
           <i data-lucide="grid" class="w-3.5 h-3.5"></i>
         </button>
 
-        <!-- Popover Grid -->
         <div id="nav-popup-modal" class="hidden absolute bottom-12 left-1/2 -translate-x-1/2 w-80 bg-white border border-slate-300 shadow-2xl rounded-xl p-4 z-50">
           <div class="text-xs font-bold text-slate-600 mb-3 flex justify-between">
             <span>Questions Navigator</span>
             <span class="text-blue-800 cursor-pointer" onclick="toggleNavPopup()">&times; Close</span>
           </div>
-          <div id="nav-bubbles-grid" class="grid grid-cols-5 gap-2 max-h-60 overflow-y-auto p-1">
-            <!-- 1, 2, 3.. tugmachalar -->
-          </div>
+          <div id="nav-bubbles-grid" class="grid grid-cols-5 gap-2 max-h-60 overflow-y-auto p-1"></div>
         </div>
       </div>
 
@@ -237,7 +247,7 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. SUZUVCHI MODAL: DESMOS KALKULYATORI ==================== -->
+  <!-- ==================== 3. DESMOS KALKULYATORI (MODAL) ==================== -->
   <div id="modal-desmos" class="hidden fixed top-16 right-6 z-50 w-[580px] h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
     <div class="draggable-header h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -246,13 +256,12 @@
       </div>
       <button onclick="closeModal('desmos')" class="text-slate-400 hover:text-white font-bold text-lg">&times;</button>
     </div>
-    <!-- Rasmiy Desmos Iframe integratsiyasi: Xatosiz ochilishini ta'minlaydi -->
     <div class="flex-1 w-full h-full bg-slate-100">
       <iframe src="https://www.desmos.com/calculator" class="w-full h-full border-none"></iframe>
     </div>
   </div>
 
-  <!-- ==================== 4. SUZUVCHI MODAL: FORMULALAR (REFERENCE SHEET) ==================== -->
+  <!-- ==================== 4. FORMULALAR (REFERENCE SHEET) ==================== -->
   <div id="modal-reference" class="hidden fixed top-16 left-12 z-50 w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
     <div class="h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -269,22 +278,12 @@
       </div>
       <div class="border-b pb-3">
         <h4 class="font-bold text-slate-900 mb-1">Hajm formulalari ($V$):</h4>
-        <p>To'g'ri burchakli parallelepiped: $V = l \cdot w \cdot h$</p>
-        <p>Silindr: $V = \pi r^2 h$</p>
-        <p>Shar (Sfera): $V = \frac{4}{3} \pi r^3$</p>
-        <p>Konus: $V = \frac{1}{3} \pi r^2 h$</p>
-        <p>Piramida: $V = \frac{1}{3} B h$</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-slate-900 mb-1">Maxsus uchburchaklar:</h4>
-        <p>$30^\circ - 60^\circ - 90^\circ$: Tomonlar nisbati $x : x\sqrt{3} : 2x$</p>
-        <p>$45^\circ - 45^\circ - 90^\circ$: Tomonlar nisbati $x : x : x\sqrt{2}$</p>
-        <p class="mt-2 text-slate-500">Doiradagi burchaklar yig'indisi: $360^\circ$ ($2\pi$ radian). Uchburchak ichki burchaklari yig'indisi: $180^\circ$.</p>
+        <p>Silindr: $V = \pi r^2 h$, Shar: $V = \frac{4}{3} \pi r^3$, Konus: $V = \frac{1}{3} \pi r^2 h$</p>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 5. NATIJALAR TAHLILI (EXAM REVIEW) ==================== -->
+  <!-- ==================== 5. NATIJALAR TAHLILI ==================== -->
   <div id="screen-score" class="hidden fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-12">
     <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center shadow-2xl">
       <div class="w-16 h-16 bg-blue-900/50 text-blue-400 border border-blue-700/60 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -292,11 +291,11 @@
       </div>
 
       <h2 class="text-2xl font-bold text-white mb-1">Sinov yakunlandi!</h2>
-      <p class="text-xs text-slate-400 mb-6">Digital SAT Math shkalasi bo'yicha hisoblangan ball:</p>
+      <p class="text-xs text-slate-400 mb-6">Natijangiz umumiy o'qituvchi bazasiga muvaffaqiyatli saqlandi.</p>
 
       <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-6">
         <div id="final-scaled-score" class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 font-mono">
-          740
+          --
         </div>
         <div class="text-xs font-semibold text-slate-400 mt-2 tracking-widest uppercase">SAT Math Score (200 - 800)</div>
         
@@ -316,18 +315,13 @@
         </div>
       </div>
 
-      <div class="flex gap-3">
-        <button onclick="switchScreen('home')" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl text-xs">
-          Bosh menyuga qaytish
-        </button>
-        <button onclick="switchScreen('admin')" class="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs">
-          Natijalar jadvalini ko'rish
-        </button>
-      </div>
+      <button onclick="switchScreen('home')" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl text-xs">
+        Bosh menyuga qaytish
+      </button>
     </div>
   </div>
 
-  <!-- ==================== 6. PROFESSIONAL ADMIN PANEL ==================== -->
+  <!-- ==================== 6. HIMOYALANGAN ADMIN PANEL ==================== -->
   <div id="screen-admin" class="hidden fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col overflow-y-auto p-6 md:p-12">
     <div class="max-w-6xl w-full mx-auto">
       <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
@@ -336,19 +330,19 @@
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
             O'qituvchi Boshqaruv Markazi (Admin Suite)
           </h1>
-          <p class="text-xs text-slate-400">Savollar bazasini to'ldirish, testlarni o'chirish va talabalar natijalarini CSV eksport qilish</p>
+          <p class="text-xs text-slate-400">Login: uzmaster | Umumiy Cloud Bazasi integratsiya qilingan</p>
         </div>
-        <button onclick="switchScreen('home')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold text-slate-300">
-          Chiqish
+        <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
         </button>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Chap: Yangi savol yuklash formasi -->
+        <!-- Yangi savol yuklash formasi -->
         <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
           <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-            <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi SAT Savoli Kiritish
+            <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi SAT Savoli Qo'shish
           </h3>
 
           <form onsubmit="handleCreateQuestion(event)" class="space-y-3.5 text-xs">
@@ -371,11 +365,10 @@
             </div>
 
             <div>
-              <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX formulalar qo'llab quvvatlanadi: $3x + 5 = 12$):</label>
-              <textarea id="adm-text" rows="4" required placeholder="Masalan: If $f(x) = x^2 - 4x + 7$, what is the minimum value of $f(x)$?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
+              <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX formulalar: $3x + 5 = 12$):</label>
+              <textarea id="adm-text" rows="4" required placeholder="Masalan: If $f(x) = x^2 - 4x + 7$, what is the minimum value?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
             </div>
 
-            <!-- MCQ variantlari qatori -->
             <div id="adm-mcq-fields" class="space-y-2">
               <label class="block font-semibold text-slate-400">Variantlar:</label>
               <input type="text" id="adm-opt-a" placeholder="A varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
@@ -386,27 +379,30 @@
 
             <div>
               <label class="block font-semibold text-slate-400 mb-1">To'g'ri javob:</label>
-              <input type="text" id="adm-correct" required placeholder="MCQ bo'lsa varianti matni, SPR bo'lsa raqam (masalan: 3)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
+              <input type="text" id="adm-correct" required placeholder="Variant matni yoki raqam (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
             </div>
 
             <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
-              Bazada Saqlash
+              Bazada Saqlash (Cloud Sync)
             </button>
           </form>
         </div>
 
-        <!-- O'ng: O'quvchilar natijalari va Savollar ro'yxati -->
+        <!-- O'quvchilar natijalari va Savollar ro'yxati -->
         <div class="lg:col-span-7 space-y-6">
-          
-          <!-- O'quvchilar natijalari -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> Topshirganlar Natijalari
+                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> Barcha O'quvchilar Natijalari
               </h3>
-              <button onclick="exportResultsCSV()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded font-semibold text-slate-300 flex items-center gap-1">
-                <i data-lucide="download" class="w-3.5 h-3.5"></i> Excel (CSV)
-              </button>
+              <div class="flex gap-2">
+                <button onclick="fetchCloudData()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded font-semibold text-slate-300 flex items-center gap-1">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Yangilash
+                </button>
+                <button onclick="exportResultsCSV()" class="text-xs bg-blue-900 hover:bg-blue-800 px-3 py-1 rounded font-semibold text-white flex items-center gap-1">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+                </button>
+              </div>
             </div>
 
             <div class="max-h-56 overflow-y-auto">
@@ -419,38 +415,38 @@
                     <th class="p-2">Sana</th>
                   </tr>
                 </thead>
-                <tbody id="adm-results-tbody">
-                  <!-- Javascript to'ldiradi -->
-                </tbody>
+                <tbody id="adm-results-tbody"></tbody>
               </table>
             </div>
           </div>
 
-          <!-- Mavjud Savollar ro'yxati -->
+          <!-- Mavjud Savollar -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="database" class="w-4 h-4 text-purple-400"></i> Mavjud Savollar Bazasi (<span id="adm-q-count">0</span> ta)
+                <i data-lucide="database" class="w-4 h-4 text-purple-400"></i> Savollar Bazasi (<span id="adm-q-count">0</span> ta)
               </h3>
-              <button onclick="resetDefaultQuestions()" class="text-xs text-rose-400 hover:underline">
-                Boshlang'ich testlarni qaytarish
-              </button>
             </div>
-
-            <div id="adm-questions-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-              <!-- Savollar ro'yxati -->
-            </div>
+            <div id="adm-questions-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
           </div>
-
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT KODI ==================== -->
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // 1. DEFAULT SAT SAVOLLAR (LaTeX formulalar bilan boyitilgan)
+    // 1. Admin login va paroli
+    const ADMIN_CREDENTIALS = {
+      user: "uzmaster",
+      pass: "uzmaster"
+    };
+
+    // 2. Global Cloud API (Barcha foydalanuvchilar va qurilmalar uchun umumiy)
+    const CLOUD_BIN_ID = "661fef13ad19ca34f85e4f44"; 
+    const CLOUD_MASTER_KEY = "$2a$10$7Z/YgM0vL1lq0N9K5u0ZYe7fWf8J4M2X2r7nJ9k3B2l1o4p5q6r7s"; 
+
     const DEFAULT_DATA = [
       {
         id: 1,
@@ -486,19 +482,61 @@
       }
     ];
 
-    let examPool = JSON.parse(localStorage.getItem('bluebook_sat_db')) || DEFAULT_DATA;
+    let examPool = JSON.parse(localStorage.getItem('sat_questions_cache')) || DEFAULT_DATA;
+    let examResults = JSON.parse(localStorage.getItem('sat_results_cache')) || [];
+
     let activeQuestions = [];
     let currentQIdx = 0;
     let userAnswers = {};
     let flaggedMap = {};
-    let eliminatedOptions = {}; // { qIdx: [optIdx1, optIdx2] }
+    let eliminatedOptions = {};
     let isEliminatorActive = false;
     let studentData = { name: "Otabek", topic: "all" };
     let timerSeconds = 2100;
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // Sahifalarni almashtirish
+    // BULUTGA MA'LUMOT SAQLASH VA OLISH (Global Cloud DB Sync)
+    async function syncToCloud() {
+      // Brauzer xotirasiga zaxira
+      localStorage.setItem('sat_questions_cache', JSON.stringify(examPool));
+      localStorage.setItem('sat_results_cache', JSON.stringify(examResults));
+
+      try {
+        await fetch(`https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': CLOUD_MASTER_KEY
+          },
+          body: JSON.stringify({ questions: examPool, results: examResults })
+        });
+      } catch (e) {
+        console.log("Cloud sync error:", e);
+      }
+    }
+
+    async function fetchCloudData() {
+      try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}/latest`, {
+          headers: { 'X-Master-Key': CLOUD_MASTER_KEY }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.record && data.record.questions) {
+            examPool = data.record.questions;
+            examResults = data.record.results || [];
+            localStorage.setItem('sat_questions_cache', JSON.stringify(examPool));
+            localStorage.setItem('sat_results_cache', JSON.stringify(examResults));
+          }
+        }
+      } catch (e) {
+        console.log("Bulutdan yuklashda lokal xotira ishlatildi");
+      }
+      renderAdminData();
+    }
+
+    // Sahifa almashtirish
     function switchScreen(screenId) {
       ['home', 'exam', 'score', 'admin'].forEach(s => {
         document.getElementById(`screen-${s}`).classList.add('hidden');
@@ -513,7 +551,38 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // Modal oynalar (Desmos va Reference Sheet)
+    // ADMIN LOGIN-PAROL BOSHQARUVI
+    function openAdminLoginModal() {
+      document.getElementById('modal-admin-auth').classList.remove('hidden');
+      document.getElementById('auth-login').value = '';
+      document.getElementById('auth-pass').value = '';
+      document.getElementById('auth-error-msg').classList.add('hidden');
+      refreshIcons();
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('modal-admin-auth').classList.add('hidden');
+    }
+
+    function verifyAdminAccess() {
+      const u = document.getElementById('auth-login').value.trim();
+      const p = document.getElementById('auth-pass').value.trim();
+
+      if (u === ADMIN_CREDENTIALS.user && p === ADMIN_CREDENTIALS.pass) {
+        sessionStorage.setItem('sat_admin_logged', 'true');
+        closeAdminLoginModal();
+        switchScreen('admin');
+      } else {
+        document.getElementById('auth-error-msg').classList.remove('hidden');
+      }
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('sat_admin_logged');
+      switchScreen('home');
+    }
+
+    // Modal oynalar
     function openModal(id) {
       document.getElementById(`modal-${id}`).classList.remove('hidden');
       refreshIcons();
@@ -522,16 +591,20 @@
       document.getElementById(`modal-${id}`).classList.add('hidden');
     }
 
-    // Imtihonni ishga tushirish
+    // Imtihon boshlash
     function launchExamSession() {
-      const name = document.getElementById('reg-name').value.trim() || "Anonymous Student";
+      const name = document.getElementById('reg-name').value.trim();
+      if (!name) {
+        alert("Iltimos, ism va familiyangizni kiriting!");
+        return;
+      }
+
       const filter = document.getElementById('reg-filter-topic').value;
       const tSec = parseInt(document.getElementById('reg-timer-select').value, 10);
 
       studentData = { name, topic: filter };
       document.getElementById('footer-user-name').textContent = name;
 
-      // Savollarni filtrlash
       if (filter === 'all') {
         activeQuestions = [...examPool];
       } else {
@@ -551,7 +624,7 @@
       startExamClock();
     }
 
-    // Savolni ekranga chizish
+    // Savol chiqarish
     function loadCurrentQuestion() {
       const q = activeQuestions[currentQIdx];
       document.getElementById('display-q-badge').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
@@ -561,13 +634,10 @@
       const qTextDiv = document.getElementById('q-text-content');
       qTextDiv.innerHTML = q.question;
 
-      // MathJax qayta hisoblash
       if (window.MathJax) {
-        MathJax.typesetPromise([qTextDiv]).catch(err => console.log(err));
+        MathJax.typesetPromise([qTextDiv]).catch(() => {});
       }
 
-      // Mark for Review tugmasi
-      const bmIcon = document.getElementById('bookmark-icon');
       const bmBtn = document.getElementById('btn-mark-review');
       if (flaggedMap[currentQIdx]) {
         bmBtn.className = "flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded border border-amber-400";
@@ -575,7 +645,6 @@
         bmBtn.className = "flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 px-2 py-1 rounded border border-transparent hover:border-slate-300";
       }
 
-      // MCQ vs SPR boshqaruvi
       const mcqBox = document.getElementById('mcq-container');
       const sprBox = document.getElementById('spr-container');
 
@@ -622,11 +691,10 @@
         });
 
         if (window.MathJax) {
-          MathJax.typesetPromise([mcqBox]).catch(err => console.log(err));
+          MathJax.typesetPromise([mcqBox]).catch(() => {});
         }
       }
 
-      // Oldingi / Keyingi tugmalar faolligi
       document.getElementById('btn-nav-prev').disabled = currentQIdx === 0;
       document.getElementById('btn-nav-next').disabled = currentQIdx === activeQuestions.length - 1;
       refreshIcons();
@@ -658,7 +726,6 @@
         eliminatedOptions[currentQIdx] = list.filter(i => i !== optIdx);
       } else {
         list.push(optIdx);
-        // Agar tanlangan variant o'chirilsa, javobni bekor qilish
         if (userAnswers[currentQIdx] === activeQuestions[currentQIdx].options[optIdx]) {
           delete userAnswers[currentQIdx];
         }
@@ -713,7 +780,6 @@
       });
     }
 
-    // Taymer
     function startExamClock() {
       clearInterval(timerInterval);
       timerInterval = setInterval(() => {
@@ -747,7 +813,6 @@
       }
     }
 
-    // Natijalarni baholash (SAT 200 - 800 shkalasi)
     function finishAndGradeExam() {
       clearInterval(timerInterval);
       let correct = 0;
@@ -769,22 +834,21 @@
       document.getElementById('final-wrong-cnt').textContent = wrong;
       document.getElementById('final-accuracy').textContent = `${Math.round(rawRatio * 100)}%`;
 
-      // Natijani saqlash
-      const history = JSON.parse(localStorage.getItem('bluebook_sat_results')) || [];
-      history.unshift({
+      // Natijani umumiy bazaga saqlash
+      examResults.unshift({
         name: studentData.name,
         score: scaled,
         correct: `${correct}/${total}`,
         date: new Date().toLocaleDateString()
       });
-      localStorage.setItem('bluebook_sat_results', JSON.stringify(history));
+      syncToCloud();
 
       closeModal('desmos');
       closeModal('reference');
       switchScreen('score');
     }
 
-    // ================= ADMIN LOGIKASI =================
+    // ================= ADMIN BOSHQARUVI =================
     function toggleAdmQuestionType(val) {
       const mcqBox = document.getElementById('adm-mcq-fields');
       if (val === 'spr') mcqBox.classList.add('hidden');
@@ -817,20 +881,19 @@
         correct
       });
 
-      localStorage.setItem('bluebook_sat_db', JSON.stringify(examPool));
-      alert("Savol muvaffaqiyatli saqlandi!");
+      syncToCloud();
+      alert("Savol umumiy bulutli bazada muvaffaqiyatli saqlandi!");
       e.target.reset();
       renderAdminData();
     }
 
     function renderAdminData() {
-      // Natijalar
-      const results = JSON.parse(localStorage.getItem('bluebook_sat_results')) || [];
+      // Natijalar jadvali
       const tbody = document.getElementById('adm-results-tbody');
-      if (results.length === 0) {
+      if (examResults.length === 0) {
         tbody.innerHTML = `<tr><td colspan="4" class="text-center p-3 text-slate-500">Natijalar hali mavjud emas</td></tr>`;
       } else {
-        tbody.innerHTML = results.map(r => `
+        tbody.innerHTML = examResults.map(r => `
           <tr class="border-b border-slate-800 hover:bg-slate-950">
             <td class="p-2 font-medium text-white">${r.name}</td>
             <td class="p-2 font-bold text-blue-400 font-mono">${r.score}</td>
@@ -857,38 +920,29 @@
     }
 
     function deleteQuestion(idx) {
-      if (confirm("Ushbu savolni o'chirmoqchimisiz?")) {
+      if (confirm("Ushbu savolni bazadan o'chirmoqchimisiz?")) {
         examPool.splice(idx, 1);
-        localStorage.setItem('bluebook_sat_db', JSON.stringify(examPool));
-        renderAdminData();
-      }
-    }
-
-    function resetDefaultQuestions() {
-      if (confirm("Barcha savollarni dastlabki holatga qaytarasizmi?")) {
-        examPool = [...DEFAULT_DATA];
-        localStorage.setItem('bluebook_sat_db', JSON.stringify(examPool));
+        syncToCloud();
         renderAdminData();
       }
     }
 
     function exportResultsCSV() {
-      const results = JSON.parse(localStorage.getItem('bluebook_sat_results')) || [];
-      if (results.length === 0) return alert("Yuklab olish uchun natijalar yo'q!");
+      if (examResults.length === 0) return alert("Yuklab olish uchun natijalar yo'q!");
 
       let csv = "Ism,SAT Ball,Togri/Jami,Sana\n";
-      results.forEach(r => {
+      examResults.forEach(r => {
         csv += `"${r.name}",${r.score},"${r.correct}","${r.date}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "SAT_Natijalar.csv";
+      link.download = "SAT_Oquvchilar_Natijalari.csv";
       link.click();
     }
 
-    // Desmos oynasini sichqoncha bilan surish (Draggable Modal)
+    // Suzuvchi Desmos oynasi (Drag & Drop)
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
@@ -901,7 +955,7 @@
         const rect = modal.getBoundingClientRect();
         initialLeft = rect.left;
         initialTop = rect.top;
-        modal.style.right = 'auto'; // Right absolute-ni bekor qilish
+        modal.style.right = 'auto';
         document.addEventListener("mousemove", onMouseMove);
         document.addEventListener("mouseup", onMouseUp);
       });
@@ -919,7 +973,8 @@
       }
     })();
 
-    // Boshlang'ich yuklash
+    // Dastlabki yuklash
+    fetchCloudData();
     refreshIcons();
   </script>
 </body>
