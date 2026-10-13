@@ -43,7 +43,7 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
-          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Har bir test uchun 35:00 daqiqa</p>
+          <p class="text-xs text-slate-400">Muhandislik Maktabi &bull; Qat'iy 35:00 daqiqa</p>
         </div>
       </div>
 
@@ -56,7 +56,6 @@
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">Topshirmoqchi bo'lgan Mock testni tanlang:</label>
           <select id="reg-mock-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:border-blue-500 outline-none">
-            <!-- Mock ro'yxati bazadan keladi -->
           </select>
         </div>
 
@@ -280,7 +279,7 @@
             <i data-lucide="shield" class="w-6 h-6 text-blue-500"></i>
             O'qituvchi Boshqaruv Markazi
           </h1>
-          <p class="text-xs text-slate-400">Mock testlarni boshqarish, savol qo'shish va o'chirish</p>
+          <p class="text-xs text-slate-400">Tezkor Savol Yuklash (Bulk Import) tizimi faol</p>
         </div>
         <button onclick="logoutAdmin()" class="px-4 py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Chiqish
@@ -289,13 +288,13 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Chap tomonda: Mock yaratish va savol kiritish -->
-        <div class="lg:col-span-5 space-y-6">
+        <!-- Chap: Tezkor Matn Tashlash (Bulk Parser) -->
+        <div class="lg:col-span-6 space-y-6">
           
-          <!-- Yangi MOCK yaratish bloki -->
+          <!-- Mock Yaratish -->
           <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3 flex items-center gap-1.5">
-              <i data-lucide="folder-plus" class="w-4 h-4"></i> Yangi Mock Guruhi Ochish
+              <i data-lucide="folder-plus" class="w-4 h-4"></i> Yangi Mock Ochish
             </h3>
             <div class="flex gap-2">
               <input type="text" id="new-mock-name" placeholder="Masalan: MOCK 2" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white outline-none focus:border-blue-500">
@@ -305,75 +304,73 @@
             </div>
           </div>
 
-          <!-- Tanlangan Mock ichiga savol qo'shish formasi -->
+          <!-- Tezkor 22 ta testni bittada yuklash oynasi -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Savol Qo'shish
-            </h3>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="file-up" class="w-4 h-4 text-emerald-400"></i> Tezkor Test Yuklash (Barcha savollarni matn qilib tashlash)
+              </h3>
+            </div>
 
-            <form onsubmit="handleCreateQuestion(event)" class="space-y-3.5 text-xs">
-              <div>
-                <label class="block font-semibold text-slate-400 mb-1">Qaysi Mock-ga qo'shiladi:</label>
-                <select id="adm-target-mock" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
-                  <!-- Mocklar ro'yxati -->
-                </select>
-              </div>
+            <div class="mb-3">
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Qaysi Mock-ga yuklamoqchisiz:</label>
+              <select id="adm-bulk-mock-target" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 outline-none">
+              </select>
+            </div>
 
-              <div>
-                <label class="block font-semibold text-slate-400 mb-1">Savol turi:</label>
-                <select id="adm-type" onchange="toggleAdmQuestionType(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none">
-                  <option value="mcq">Multiple Choice (A, B, C, D)</option>
-                  <option value="spr">Student-Produced Response (Son)</option>
-                </select>
-              </div>
+            <div class="mb-3">
+              <label class="block text-xs font-semibold text-slate-400 mb-1">
+                Format: Har bir savol <span class="text-blue-400 font-mono">#1</span> bilan boshlansin, to'g'ri javob oldiga <span class="text-emerald-400 font-mono">+</span> qo'ying:
+              </label>
+              <textarea id="bulk-input-text" rows="12" placeholder="#1 If 3x + 7 = 22, what is the value of 6x - 5?
++A) 25
+B) 30
+C) 35
+D) 45
 
-              <div>
-                <label class="block font-semibold text-slate-400 mb-1">Savol matni (LaTeX: $3x + 5 = 12$):</label>
-                <textarea id="adm-text" rows="4" required placeholder="Masalan: If $3x + 7 = 22$, what is the value of $6x - 5$?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none"></textarea>
-              </div>
+#2 What is the slope of the line passing through (0, 3) and (4, 11)?
++2
 
-              <div id="adm-mcq-fields" class="space-y-2">
-                <label class="block font-semibold text-slate-400">Variantlar:</label>
-                <input type="text" id="adm-opt-a" placeholder="A varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-                <input type="text" id="adm-opt-b" placeholder="B varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-                <input type="text" id="adm-opt-c" placeholder="C varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-                <input type="text" id="adm-opt-d" placeholder="D varianti" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200">
-              </div>
+#3 If sin(A) = 4/5, what is cos(C)?
+A) 3/5
++B) 4/5
+C) 3/4
+D) 5/4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 font-mono outline-none focus:border-emerald-500"></textarea>
+            </div>
 
-              <div>
-                <label class="block font-semibold text-slate-400 mb-1">To'g'ri javob:</label>
-                <input type="text" id="adm-correct" required placeholder="Variant matni yoki son (masalan: 25)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono">
-              </div>
-
-              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
-                Savolni Saqlash
-              </button>
-            </form>
+            <button onclick="handleBulkImport()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40">
+              <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+              <span>Barcha savollarni bitta bosishda yuklash</span>
+            </button>
           </div>
 
         </div>
 
-        <!-- O'ng tomonda: Mocklar, Savollarni o'chirish va Natijalar -->
-        <div class="lg:col-span-7 space-y-6">
+        <!-- O'ng: Savollar ro'yxati, O'chirish va Natijalar -->
+        <div class="lg:col-span-6 space-y-6">
           
           <!-- Mocklar bo'yicha savollar ro'yxati va O'CHIRISH -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="list-ordered" class="w-4 h-4 text-purple-400"></i> Mock Testlar va Savollar
+                <i data-lucide="list-ordered" class="w-4 h-4 text-purple-400"></i> Mock Savollari Bazasi
               </h3>
-              <select id="adm-filter-mock" onchange="renderAdminQuestionsList()" class="bg-slate-950 border border-slate-800 text-xs rounded px-2 py-1 text-slate-300">
-                <!-- Filtr -->
-              </select>
+              <div class="flex items-center gap-2">
+                <select id="adm-filter-mock" onchange="renderAdminQuestionsList()" class="bg-slate-950 border border-slate-800 text-xs rounded px-2 py-1 text-slate-300">
+                </select>
+                <button onclick="handleDeleteCurrentMock()" class="text-xs text-rose-400 hover:text-rose-300 px-2 py-1 bg-rose-950/40 border border-rose-900/40 rounded">
+                  Mockni o'chirish
+                </button>
+              </div>
             </div>
             <div id="adm-questions-list" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
           </div>
 
-          <!-- O'quvchilar natijalari -->
+          <!-- Natijalar monitoringi -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> Barcha O'quvchilar Natijalari (<span id="results-count-badge">0</span>)
+                <i data-lucide="users" class="w-4 h-4 text-blue-400"></i> O'quvchilar Natijalari (<span id="results-count-badge">0</span>)
               </h3>
               <div class="flex gap-2">
                 <button onclick="fetchCloudData()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded font-semibold text-slate-300 flex items-center gap-1">
@@ -409,10 +406,8 @@
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // Shaxsiy Firebase bazangiz
     const DB_URL = "https://muhandislik-sat-default-rtdb.firebaseio.com";
 
-    // Standart Mock 1 savollari
     const DEFAULT_DATA = [
       {
         id: "1",
@@ -425,16 +420,8 @@
       {
         id: "2",
         mock: "MOCK 1",
-        type: "mcq",
-        question: "For the quadratic function $f(x) = (x - 4)(x + 2)$, for what value of $x$ does the minimum value of $f(x)$ occur?",
-        options: ["-1", "1", "2", "4"],
-        correct: "1"
-      },
-      {
-        id: "3",
-        mock: "MOCK 1",
         type: "spr",
-        question: "A line in the $xy$-plane passes through the points $(0, 3)$ and $(4, 11)$. What is the slope of this line?",
+        question: "What is the slope of the line passing through $(0, 3)$ and $(4, 11)$?",
         options: [],
         correct: "2"
       }
@@ -451,14 +438,13 @@
     let eliminatedOptions = {};
     let isEliminatorActive = false;
     let studentData = { name: "", mock: "MOCK 1" };
-    let timerSeconds = 2100; // Qat'iy 35 daqiqa
+    let timerSeconds = 2100;
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // BAZA BILAN ALOQA
+    // BULUTDAN YUKLASH
     async function fetchCloudData() {
       try {
-        // Savollar
         const qRes = await fetch(`${DB_URL}/questions.json`);
         if (qRes.ok) {
           const qData = await qRes.json();
@@ -468,7 +454,6 @@
           }
         }
 
-        // Mock ro'yxati
         const mRes = await fetch(`${DB_URL}/mocks.json`);
         if (mRes.ok) {
           const mData = await mRes.json();
@@ -478,7 +463,6 @@
           }
         }
 
-        // Natijalar
         const rRes = await fetch(`${DB_URL}/results.json`);
         if (rRes.ok) {
           const rData = await rRes.json();
@@ -488,17 +472,17 @@
           }
         }
       } catch (err) {
-        console.warn("Lokal zaxira ishlatildi:", err);
+        console.warn("Lokal xotira ishlatildi:", err);
       }
       populateMockDropdowns();
       renderAdminData();
     }
 
-    // Yangi MOCK yaratish
+    // YANGI MOCK OCHISH
     async function handleCreateMock() {
       const input = document.getElementById('new-mock-name');
       const name = input.value.trim().toUpperCase();
-      if (!name) return alert("Mock nomini kiriting (masalan: MOCK 2)");
+      if (!name) return alert("Mock nomini kiriting!");
 
       if (!mockList.includes(name)) {
         mockList.push(name);
@@ -510,27 +494,101 @@
             body: JSON.stringify(mockList)
           });
         } catch (e) { console.error(e); }
-        alert(`${name} muvaffaqiyatli ochildi!`);
+        alert(`${name} yaratildi!`);
         input.value = '';
         populateMockDropdowns();
       } else {
-        alert("Bunday nomdagi Mock allaqachon mavjud!");
+        alert("Bunday nomdagi Mock mavjud!");
       }
     }
 
-    // Mock tanlash ro'yxatlarini to'ldirish
     function populateMockDropdowns() {
-      // Bosh sahifadagi tanlash
       const regSelect = document.getElementById('reg-mock-select');
       regSelect.innerHTML = mockList.map(m => `<option value="${m}">${m}</option>`).join('');
 
-      // Admindagi savol qo'shish tanlashi
-      const admTarget = document.getElementById('adm-target-mock');
-      admTarget.innerHTML = mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+      const bulkTarget = document.getElementById('adm-bulk-mock-target');
+      bulkTarget.innerHTML = mockList.map(m => `<option value="${m}">${m}</option>`).join('');
 
-      // Admindagi filtr
       const admFilter = document.getElementById('adm-filter-mock');
-      admFilter.innerHTML = `<option value="ALL">Barchasi</option>` + mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+      admFilter.innerHTML = `<option value="ALL">Barcha Mocklar</option>` + mockList.map(m => `<option value="${m}">${m}</option>`).join('');
+    }
+
+    // ================= TEZKOR PARSER (MATNDAN 22 TA SAVOLNI AJRATIB YUKLASH) =================
+    async function handleBulkImport() {
+      const targetMock = document.getElementById('adm-bulk-mock-target').value;
+      const rawText = document.getElementById('bulk-input-text').value.trim();
+
+      if (!rawText) return alert("Iltimos, test matnini kiriting!");
+
+      // Savollarni # raqam bo'yicha bo'laklarga ajratish
+      const blocks = rawText.split(/(?=#\d+)/g).filter(b => b.trim().length > 0);
+      const parsedQuestions = [];
+
+      for (let block of blocks) {
+        const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length === 0) continue;
+
+        // 1-qator: Savol matni (#1 olib tashlanadi)
+        let questionText = lines[0].replace(/^#\d+\s*/, '').trim();
+
+        // Qolgan qatorlar: variantlar yoki javob
+        const restLines = lines.slice(1);
+        let options = [];
+        let correctAnswer = "";
+        let isMCQ = false;
+
+        // Variantlar bormi tekshirish (A), B), C), D))
+        const hasMCQOptions = restLines.some(l => /^[+]?[A-D][\)\.]/i.test(l));
+
+        if (hasMCQOptions) {
+          isMCQ = true;
+          restLines.forEach(line => {
+            const isCorrect = line.startsWith('+');
+            const cleanLine = line.replace(/^\+\s*/, '').replace(/^[A-D][\)\.]\s*/i, '').trim();
+            options.push(cleanLine);
+            if (isCorrect) correctAnswer = cleanLine;
+          });
+        } else {
+          // SPR (Yopiq javob - faqat son)
+          isMCQ = false;
+          const ansLine = restLines.find(l => l.startsWith('+')) || restLines[0];
+          if (ansLine) correctAnswer = ansLine.replace(/^\+\s*/, '').trim();
+        }
+
+        if (questionText && correctAnswer) {
+          parsedQuestions.push({
+            id: Date.now().toString() + Math.random().toString().slice(2, 5),
+            mock: targetMock,
+            type: isMCQ ? 'mcq' : 'spr',
+            question: questionText,
+            options: options,
+            correct: correctAnswer
+          });
+        }
+      }
+
+      if (parsedQuestions.length === 0) {
+        return alert("Savollar formatini tekshiring! Masalan: #1 Savol... keyin +A) Javob");
+      }
+
+      // Bazaga yuklash
+      for (let q of parsedQuestions) {
+        try {
+          const res = await fetch(`${DB_URL}/questions.json`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(q)
+          });
+          const data = await res.json();
+          q.firebaseKey = data.name;
+        } catch (e) { console.error(e); }
+        examPool.push(q);
+      }
+
+      localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
+      alert(`Muvaffaqiyatli: ${targetMock} ichiga ${parsedQuestions.length} ta savol yuklandi!`);
+      document.getElementById('bulk-input-text').value = '';
+      renderAdminQuestionsList();
     }
 
     // SAVOLNI O'CHIRISH
@@ -547,12 +605,15 @@
       renderAdminQuestionsList();
     }
 
-    // MOCK-NI TO'LIQ O'CHIRISH
-    async function deleteEntireMock(mockName) {
-      if (!confirm(`${mockName} va uning ichidagi barcha savollarni o'chirmoqchimisiz?`)) return;
+    // TANLANGAN MOCKNI O'CHIRISH
+    async function handleDeleteCurrentMock() {
+      const selected = document.getElementById('adm-filter-mock').value;
+      if (selected === "ALL") return alert("Iltimos, o'chirish uchun aniq bitta Mockni tanlang!");
 
-      mockList = mockList.filter(m => m !== mockName);
-      examPool = examPool.filter(q => q.mock !== mockName);
+      if (!confirm(`${selected} va uning barcha savollarini o'chirmoqchimisiz?`)) return;
+
+      mockList = mockList.filter(m => m !== selected);
+      examPool = examPool.filter(q => q.mock !== selected);
 
       localStorage.setItem('perm_mock_list', JSON.stringify(mockList));
       localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
@@ -566,65 +627,25 @@
       renderAdminQuestionsList();
     }
 
-    // Savol qo'shish
-    async function handleCreateQuestion(e) {
-      e.preventDefault();
-      const mock = document.getElementById('adm-target-mock').value;
-      const type = document.getElementById('adm-type').value;
-      const text = document.getElementById('adm-text').value.trim();
-      const correct = document.getElementById('adm-correct').value.trim();
-
-      let options = [];
-      if (type === 'mcq') {
-        options = [
-          document.getElementById('adm-opt-a').value.trim(),
-          document.getElementById('adm-opt-b').value.trim(),
-          document.getElementById('adm-opt-c').value.trim(),
-          document.getElementById('adm-opt-d').value.trim()
-        ];
-      }
-
-      const newQ = { id: Date.now().toString(), mock, type, question: text, options, correct };
-
-      try {
-        const res = await fetch(`${DB_URL}/questions.json`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newQ)
-        });
-        const data = await res.json();
-        newQ.firebaseKey = data.name;
-      } catch (err) { console.error(err); }
-
-      examPool.push(newQ);
-      localStorage.setItem('perm_sat_questions', JSON.stringify(examPool));
-
-      alert(`${mock} ichiga savol qo'shildi!`);
-      e.target.reset();
-      renderAdminQuestionsList();
-    }
-
-    // Admin oynasidagi savollar ro'yxatini chiqarish
     function renderAdminQuestionsList() {
       const filter = document.getElementById('adm-filter-mock').value;
       const qList = document.getElementById('adm-questions-list');
-      
       const filtered = filter === "ALL" ? examPool : examPool.filter(q => q.mock === filter);
 
       if (filtered.length === 0) {
-        qList.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">Bu Mock-da hozircha savollar yo'q</div>`;
+        qList.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">Bu Mock-da savollar mavjud emas</div>`;
         return;
       }
 
       qList.innerHTML = filtered.map((q, idx) => `
-        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex justify-between items-center text-xs">
+        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center text-xs">
           <div class="truncate max-w-[70%]">
             <span class="font-bold text-blue-400">[${q.mock || 'MOCK 1'}]</span> 
             <span class="text-slate-300 ml-1">${q.question.replace(/\$/g, '')}</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-emerald-400 font-mono text-[11px]">${q.correct}</span>
-            <button onclick="deleteQuestion('${q.firebaseKey || ''}', ${idx})" class="text-rose-500 hover:text-rose-400 font-bold px-2 py-1 bg-rose-950/40 rounded border border-rose-900/40">
+            <span class="text-emerald-400 font-mono text-[11px] font-bold">${q.correct}</span>
+            <button onclick="deleteQuestion('${q.firebaseKey || ''}', ${idx})" class="text-rose-500 hover:text-rose-400 font-bold px-2 py-0.5 bg-rose-950/40 rounded border border-rose-900/40">
               O'chirish
             </button>
           </div>
@@ -632,7 +653,7 @@
       `).join('');
     }
 
-    // TESTNI BOSHLASH
+    // ================= TEST ISHLASH LOGIKASI =================
     async function launchExamSession() {
       const name = document.getElementById('reg-name').value.trim();
       if (!name) return alert("Iltimos, ism va familiyangizni kiriting!");
@@ -640,10 +661,9 @@
       const chosenMock = document.getElementById('reg-mock-select').value;
       await fetchCloudData();
 
-      // Tanlangan Mock bo'yicha savollarni saralash
       activeQuestions = examPool.filter(q => (q.mock || 'MOCK 1') === chosenMock);
       if (activeQuestions.length === 0) {
-        return alert(`Hozirda ${chosenMock} ichida savollar mavjud emas! Ustoz panelidan savol qo'shing.`);
+        return alert(`${chosenMock} ichida savollar yo'q! Ustoz panelidan savol yuklang.`);
       }
 
       studentData = { name, mock: chosenMock };
@@ -654,7 +674,7 @@
       userAnswers = {};
       flaggedMap = {};
       eliminatedOptions = {};
-      timerSeconds = 2100; // Qat'iy 35 daqiqa
+      timerSeconds = 2100;
 
       switchScreen('exam');
       loadCurrentQuestion();
@@ -888,7 +908,6 @@
       switchScreen('score');
     }
 
-    // ================= ADMIN BOSHQARUVI =================
     function verifyAdminAccess() {
       const u = document.getElementById('auth-login').value.trim();
       const p = document.getElementById('auth-pass').value.trim();
@@ -936,12 +955,6 @@
       link.click();
     }
 
-    function toggleAdmQuestionType(val) {
-      const mcqBox = document.getElementById('adm-mcq-fields');
-      if (val === 'spr') mcqBox.classList.add('hidden');
-      else mcqBox.classList.remove('hidden');
-    }
-
     function switchScreen(screenId) {
       ['home', 'exam', 'score', 'admin'].forEach(s => {
         document.getElementById(`screen-${s}`).classList.add('hidden');
@@ -964,7 +977,6 @@
     function openModal(id) { document.getElementById(`modal-${id}`).classList.remove('hidden'); refreshIcons(); }
     function closeModal(id) { document.getElementById(`modal-${id}`).classList.add('hidden'); }
 
-    // Suzuvchi Desmos
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
