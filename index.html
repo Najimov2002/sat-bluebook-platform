@@ -74,12 +74,12 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">Topshirmoqchi bo'lgan Mock testni tanlang:</label>
-          <select id="reg-mock-select" onchange="updateHomeTimeNotice()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:border-blue-500 outline-none">
+          <select id="reg-mock-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:border-blue-500 outline-none">
           </select>
         </div>
 
         <button onclick="launchExamSession()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold rounded-xl text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30">
-          <span id="btn-start-label">Testni Boshlash</span>
+          <span>Testni Boshlash</span>
           <i data-lucide="play" class="w-4 h-4 fill-current"></i>
         </button>
 
@@ -131,7 +131,7 @@
   <!-- ==================== 2. RASMIY BLUEBOOK IMTIHON XONASI ==================== -->
   <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none">
     
-    <!-- HEADER: Yuqori panel (End Exam tugmasi xavfsiz tepaga olindi) -->
+    <!-- HEADER -->
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm">
       <div class="flex items-center gap-2 sm:gap-3 truncate max-w-[170px] sm:max-w-none">
         <span class="font-bold text-xs sm:text-sm tracking-tight text-slate-800 truncate" id="header-mock-title">MOCK 1</span>
@@ -167,7 +167,6 @@
           <span class="hidden sm:inline">Calculator (Desmos)</span>
         </button>
 
-        <!-- XAVFSIZ TUGATISH TUGMASI (TEPADA) -->
         <button onclick="confirmFinishExam()" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs shadow-sm transition ml-1" title="Testni yakunlash">
           <span class="hidden sm:inline">End Exam</span>
           <span class="sm:hidden text-[11px]">Tugatish</span>
@@ -175,7 +174,7 @@
       </div>
     </header>
 
-    <!-- ASOSIY MAYDON (Pastki panel to'sib qo'ymasligi uchun pb-28 berildi) -->
+    <!-- ASOSIY MAYDON -->
     <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-28 sm:pb-24 bg-white flex justify-center">
       <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
         <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-5 md:pb-0 md:pr-8">
@@ -209,24 +208,21 @@
       </div>
     </main>
 
-    <!-- FOOTER: Telefondan kirganda eng tagiga qotirilgan, barmoq tegishi oson boshqaruv paneli -->
+    <!-- FOOTER: Mobil uchun qulay boshqaruv -->
     <footer class="fixed bottom-0 left-0 right-0 z-40 bg-slate-100 border-t border-slate-300 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl pb-safe">
       <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
         
-        <!-- CHAPDA: Keng, bosish oson BACK tugmasi -->
         <button id="btn-nav-prev" onclick="jumpQuestionRelative(-1)" class="flex-1 sm:flex-initial sm:w-28 py-2.5 sm:py-2 border border-slate-300 bg-white active:bg-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center gap-1 shadow-sm disabled:opacity-30">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
           <span>Back</span>
         </button>
 
-        <!-- O'RTADA: Kattaroq va qulay "SAVOL 1 / 30" NAVIGATOR TUGMASI -->
         <div class="relative flex-1 sm:flex-initial flex justify-center">
           <button onclick="toggleNavPopup()" class="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-slate-800 text-white active:bg-slate-700 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm">
             <span id="nav-summary-label">Question 1 of 22</span>
             <i data-lucide="grid" class="w-3.5 h-3.5"></i>
           </button>
 
-          <!-- Navigator ro'yxati -->
           <div id="nav-popup-modal" class="hidden absolute bottom-14 left-1/2 -translate-x-1/2 w-72 sm:w-80 bg-white border border-slate-300 shadow-2xl rounded-2xl p-4 z-50">
             <div class="text-xs font-bold text-slate-600 mb-3 flex justify-between items-center">
               <span>Barcha savollar</span>
@@ -236,7 +232,6 @@
           </div>
         </div>
 
-        <!-- O'NGDA: Ko'zga tashlanadigan, keng NEXT tugmasi -->
         <button id="btn-nav-next" onclick="jumpQuestionRelative(1)" class="flex-1 sm:flex-initial sm:w-28 py-2.5 sm:py-2 bg-blue-800 active:bg-blue-900 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1 shadow-md disabled:opacity-30">
           <span>Next</span>
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
@@ -246,7 +241,7 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. DESMOS MODAL (MOBIL VA KOMPYUTER UCHUN SILJIYDI) ==================== -->
+  <!-- ==================== 3. DESMOS MODAL ==================== -->
   <div id="modal-desmos" class="hidden fixed top-16 right-4 left-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-[580px] h-[480px] sm:h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
     <div class="draggable-header h-11 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
@@ -326,10 +321,9 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         
-        <!-- Chap: Mock Yaratish (Vaqt kiritish bilan) va Tezkor Parser -->
+        <!-- Chap: Mock Yaratish va Bulk Parser -->
         <div class="lg:col-span-6 space-y-6">
           
-          <!-- Yangi Mock Yaratish (Ustoz vaqtni o'zi belgilaydi) -->
           <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3 flex items-center gap-1.5">
               <i data-lucide="folder-plus" class="w-4 h-4"></i> Yangi Mock Ochish va Vaqtini Belgilash
@@ -343,7 +337,6 @@
             </div>
           </div>
 
-          <!-- Tezkor test yuklash oynasi -->
           <div class="bg-slate-900 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-3">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -379,10 +372,9 @@ D) 45
 
         </div>
 
-        <!-- O'ng: Savollar ro'yxati va O'quvchilar natijalari (Vaqti bilan) -->
+        <!-- O'ng: Savollar ro'yxati va Natijalar -->
         <div class="lg:col-span-6 space-y-6">
           
-          <!-- Mocklar bo'yicha savollar ro'yxati -->
           <div class="bg-slate-900 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -399,7 +391,6 @@ D) 45
             <div id="adm-questions-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
           </div>
 
-          <!-- Natijalar monitoringi (Aniq Soat va Vaqti bilan) -->
           <div class="bg-slate-900 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -445,7 +436,6 @@ D) 45
   <script>
     const DB_URL = "https://muhandislik-sat-default-rtdb.firebaseio.com";
 
-    // Boshlang'ich Mock va uning vaqti (daqiqa hisobida)
     let mockData = JSON.parse(localStorage.getItem('perm_mock_data')) || {
       "MOCK 1": { time: 35 }
     };
@@ -464,7 +454,6 @@ D) 45
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // BULUTDAN YUKLASH
     async function fetchCloudData() {
       try {
         const qRes = await fetch(`${DB_URL}/questions.json`);
@@ -503,7 +492,6 @@ D) 45
       renderAdminData();
     }
 
-    // BARCHA NATIJALARNI TOZALASH
     async function clearAllResults() {
       if (!confirm("Diqqat! Barcha o'quvchilar natijalarini butunlay tozalab tashlamoqchimisiz?")) return;
       try {
@@ -515,7 +503,6 @@ D) 45
       alert("Barcha natijalar tozalandi!");
     }
 
-    // YAKKA NATIJANI O'CHIRISH
     async function deleteSingleResult(firebaseKey, index) {
       if (!confirm("Ushbu o'quvchi natijasini o'chirmoqchimisiz?")) return;
       if (firebaseKey) {
@@ -528,7 +515,6 @@ D) 45
       renderAdminData();
     }
 
-    // YANGI MOCK YARATISH (VAQTI BILAN)
     async function handleCreateMock() {
       const input = document.getElementById('new-mock-name');
       const timeInput = document.getElementById('new-mock-time');
@@ -558,29 +544,17 @@ D) 45
     function populateMockDropdowns() {
       const mockNames = Object.keys(mockData);
 
+      // Faqat Mock nomi chiqadi, daqiqasi ko'rinmaydi
       const regSelect = document.getElementById('reg-mock-select');
-      regSelect.innerHTML = mockNames.map(m => {
-        const t = mockData[m]?.time || 35;
-        return `<option value="${m}">${m} (${t} daqiqa)</option>`;
-      }).join('');
+      regSelect.innerHTML = mockNames.map(m => `<option value="${m}">${m}</option>`).join('');
 
       const bulkTarget = document.getElementById('adm-bulk-mock-target');
       bulkTarget.innerHTML = mockNames.map(m => `<option value="${m}">${m}</option>`).join('');
 
       const admFilter = document.getElementById('adm-filter-mock');
       admFilter.innerHTML = `<option value="ALL">Barcha Mocklar</option>` + mockNames.map(m => `<option value="${m}">${m}</option>`).join('');
-
-      updateHomeTimeNotice();
     }
 
-    function updateHomeTimeNotice() {
-      const chosen = document.getElementById('reg-mock-select').value;
-      const t = mockData[chosen]?.time || 35;
-      const btn = document.getElementById('btn-start-label');
-      if (btn) btn.textContent = `Testni Boshlash (${t} daqiqa)`;
-    }
-
-    // TEZKOR TEST YUKLASH (BULK IMPORT)
     async function handleBulkImport() {
       const targetMock = document.getElementById('adm-bulk-mock-target').value;
       const rawText = document.getElementById('bulk-input-text').value.trim();
@@ -708,7 +682,6 @@ D) 45
       `).join('');
     }
 
-    // TESTNI BOSHLASH
     async function launchExamSession() {
       const name = document.getElementById('reg-name').value.trim();
       if (!name) return alert("Iltimos, ism va familiyangizni kiriting!");
@@ -721,7 +694,6 @@ D) 45
         return alert(`${chosenMock} ichida savollar yo'q! Ustoz panelidan savol yuklang.`);
       }
 
-      // Ustoz belgilagan vaqt bo'yicha taymerni o'rnatish
       const mockMinutes = mockData[chosenMock]?.time || 35;
       timerSeconds = mockMinutes * 60;
 
@@ -739,7 +711,6 @@ D) 45
       startExamClock();
     }
 
-    // SAVOL VA VARIANTLARNI CHIQARISH
     function loadCurrentQuestion() {
       const q = activeQuestions[currentQIdx];
       document.getElementById('display-q-badge').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
@@ -926,7 +897,6 @@ D) 45
       }
     }
 
-    // NATIJANI HISOBLASH VA VAQTI (SOAT:DAQIQA) BILAN SAQLASH
     async function finishAndGradeExam() {
       clearInterval(timerInterval);
       let correct = 0;
@@ -949,7 +919,6 @@ D) 45
       document.getElementById('final-accuracy').textContent = `${Math.round(rawRatio * 100)}%`;
       document.getElementById('score-mock-badge').textContent = `${studentData.mock} natijangiz ustoz bazasiga saqlandi.`;
 
-      // Aniq sana va soat-daqiqa formati
       const now = new Date();
       const dateStr = now.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const timeStr = now.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
