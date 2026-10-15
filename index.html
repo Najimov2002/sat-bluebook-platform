@@ -86,14 +86,32 @@
           <i data-lucide="play" class="w-4 h-4 fill-current"></i>
         </button>
 
-        <div class="pt-5 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs">
+        <!-- Pastki qism: Admin va Aloqa ma'lumotlari -->
+        <div class="pt-5 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
           <button onclick="openAdminLoginModal()" class="text-slate-400 hover:text-blue-400 font-semibold flex items-center gap-1.5 py-1 px-2 rounded hover:bg-slate-800 transition">
             <i data-lucide="lock" class="w-3.5 h-3.5"></i>
             <span>Ustoz / Boshqaruv</span>
           </button>
-          <div class="text-center sm:text-right">
+
+          <div class="text-center sm:text-right space-y-1">
             <div class="text-slate-500 font-medium">Official Bluebook Exam System</div>
-            <div class="text-blue-400/90 font-semibold text-[11px] mt-0.5">&copy; Otabek Najimov</div>
+            <div class="text-blue-400/90 font-bold text-xs">&copy; Otabek Najimov</div>
+            
+            <div class="flex items-center justify-center sm:justify-end gap-3 pt-1 text-[11px]">
+              <!-- Telefon raqam havolasi -->
+              <a href="tel:+998912205510" class="text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition">
+                <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                <span>+998 91 220 55 10</span>
+              </a>
+
+              <span class="text-slate-700">•</span>
+
+              <!-- Telegram havolasi -->
+              <a href="https://t.me/uz_master" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-medium flex items-center gap-1 transition">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span>Telegram</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -451,13 +469,11 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
     let timerInterval = null;
     let isTimerHidden = false;
 
-    // BAZADAN TORTISH VA MOCKLARNI AVTOMATIK ANIQLASH
     async function fetchCloudData() {
       const badge = document.getElementById('loading-badge');
       if (badge) badge.classList.remove('hidden');
 
       try {
-        // 1. Savollarni tortish
         const qRes = await fetch(`${DB_URL}/questions.json`);
         if (qRes.ok) {
           const qData = await qRes.json();
@@ -466,7 +482,6 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
           }
         }
 
-        // 2. Mocks ro'yxatini tortish
         const mRes = await fetch(`${DB_URL}/mocks.json`);
         if (mRes.ok) {
           const mData = await mRes.json();
@@ -475,14 +490,12 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
           }
         }
 
-        // AGAR MOCKS RO'YXATIDA BO'LMASA, SAVOLLAR ICHIDAN MOCK NOMLARINI AVTOMATIK YIG'IB OLISH
         examPool.forEach(q => {
           if (q.mock && !mockData[q.mock]) {
             mockData[q.mock] = { time: 35 };
           }
         });
 
-        // 3. Natijalarni tortish
         const rRes = await fetch(`${DB_URL}/results.json`);
         if (rRes.ok) {
           const rData = await rRes.json();
@@ -615,7 +628,6 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
         return alert("Savollar formatini tekshiring!");
       }
 
-      // Bazaga Mock nomini saqlab qo'yish
       if (!mockData[targetMock]) mockData[targetMock] = { time: 35 };
       try {
         await fetch(`${DB_URL}/mocks.json`, {
@@ -1111,7 +1123,6 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
       }
     })();
 
-    // SAHIFA OCHILGANDA DARCHOL BULUTDAN TORTISH
     window.addEventListener('DOMContentLoaded', () => {
       fetchCloudData();
       refreshIcons();
