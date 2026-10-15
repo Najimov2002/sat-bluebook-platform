@@ -24,7 +24,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
     body { font-family: 'Inter', sans-serif; user-select: none; -webkit-user-select: none; }
     .sat-math-text { font-family: 'Crimson Pro', Georgia, serif; font-size: 1.25rem; line-height: 1.7; }
-    .draggable-header { cursor: move; }
+    .draggable-header { cursor: move; touch-action: none; }
     .strikethrough-opt { text-decoration: line-through; opacity: 0.4; }
   </style>
 </head>
@@ -208,14 +208,14 @@
     </footer>
   </div>
 
-  <!-- ==================== 3. DESMOS MODAL ==================== -->
-  <div id="modal-desmos" class="hidden fixed top-16 right-6 z-50 w-[580px] h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
-    <div class="draggable-header h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
+  <!-- ==================== 3. DESMOS MODAL (MOBIL VA KOMPYUTER UCHUN SILJIYDI) ==================== -->
+  <div id="modal-desmos" class="hidden fixed top-16 right-4 left-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-[580px] h-[500px] sm:h-[550px] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden resize">
+    <div class="draggable-header h-11 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 select-none">
       <div class="flex items-center gap-2 text-xs font-bold">
         <i data-lucide="calculator" class="w-4 h-4 text-blue-400"></i>
         <span>Official Desmos Graphing Calculator</span>
       </div>
-      <button onclick="closeModal('desmos')" class="text-slate-400 hover:text-white font-bold text-lg">&times;</button>
+      <button onclick="closeModal('desmos')" class="text-slate-400 hover:text-white font-bold text-xl px-2">&times;</button>
     </div>
     <div class="flex-1 w-full h-full bg-slate-100">
       <iframe src="https://www.desmos.com/calculator" class="w-full h-full border-none"></iframe>
@@ -223,7 +223,7 @@
   </div>
 
   <!-- ==================== 4. FORMULALAR (REFERENCE) ==================== -->
-  <div id="modal-reference" class="hidden fixed top-16 left-12 z-50 w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
+  <div id="modal-reference" class="hidden fixed top-16 left-4 sm:left-12 right-4 sm:right-auto z-50 w-auto sm:w-[600px] max-h-[80vh] bg-white rounded-xl shadow-2xl border border-slate-300 flex flex-col overflow-hidden">
     <div class="h-10 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2 text-xs font-bold">
         <i data-lucide="book-open" class="w-4 h-4 text-amber-400"></i>
@@ -234,7 +234,7 @@
     <div class="p-6 overflow-y-auto text-slate-800 text-xs space-y-4">
       <div class="border-b pb-3">
         <h4 class="font-bold text-slate-900 mb-1">Geometriya va Doira:</h4>
-        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$ component</p>
+        <p>$A = \pi r^2$, $C = 2\pi r$, $A = l \cdot w$, $A = \frac{1}{2} b \cdot h$, $c^2 = a^2 + b^2$</p>
       </div>
       <div>
         <h4 class="font-bold text-slate-900 mb-1">Hajm ($V$):</h4>
@@ -304,7 +304,7 @@
             </div>
           </div>
 
-          <!-- Tezkor 22 ta testni bittada yuklash oynasi -->
+          <!-- Tezkor test yuklash oynasi -->
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
             <div class="flex justify-between items-center mb-3">
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -478,36 +478,29 @@ D) 45
       renderAdminData();
     }
 
-    // BARCHA NATIJALARNI TOZALASH (O'CHIRISH)
     async function clearAllResults() {
       if (!confirm("Diqqat! Barcha o'quvchilar natijalarini butunlay tozalab tashlamoqchimisiz?")) return;
-
       try {
         await fetch(`${DB_URL}/results.json`, { method: 'DELETE' });
       } catch (e) { console.error(e); }
-
       examResults = [];
       localStorage.setItem('perm_sat_results', JSON.stringify([]));
       renderAdminData();
       alert("Barcha natijalar tozalandi!");
     }
 
-    // BITTA NATIJANI O'CHIRISH
     async function deleteSingleResult(firebaseKey, index) {
       if (!confirm("Ushbu o'quvchi natijasini o'chirmoqchimisiz?")) return;
-
       if (firebaseKey) {
         try {
           await fetch(`${DB_URL}/results/${firebaseKey}.json`, { method: 'DELETE' });
         } catch (e) { console.error(e); }
       }
-
       examResults.splice(index, 1);
       localStorage.setItem('perm_sat_results', JSON.stringify(examResults));
       renderAdminData();
     }
 
-    // YANGI MOCK OCHISH
     async function handleCreateMock() {
       const input = document.getElementById('new-mock-name');
       const name = input.value.trim().toUpperCase();
@@ -542,11 +535,9 @@ D) 45
       admFilter.innerHTML = `<option value="ALL">Barcha Mocklar</option>` + mockList.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
-    // ================= TEZKOR PARSER =================
     async function handleBulkImport() {
       const targetMock = document.getElementById('adm-bulk-mock-target').value;
       const rawText = document.getElementById('bulk-input-text').value.trim();
-
       if (!rawText) return alert("Iltimos, test matnini kiriting!");
 
       const blocks = rawText.split(/(?=#\d+)/g).filter(b => b.trim().length > 0);
@@ -613,10 +604,8 @@ D) 45
       renderAdminQuestionsList();
     }
 
-    // SAVOLNI O'CHIRISH
     async function deleteQuestion(firebaseKey, index) {
       if (!confirm("Ushbu savolni rostdan ham o'chirmoqchimisiz?")) return;
-
       if (firebaseKey) {
         try {
           await fetch(`${DB_URL}/questions/${firebaseKey}.json`, { method: 'DELETE' });
@@ -627,11 +616,9 @@ D) 45
       renderAdminQuestionsList();
     }
 
-    // MOCKNI O'CHIRISH
     async function handleDeleteCurrentMock() {
       const selected = document.getElementById('adm-filter-mock').value;
       if (selected === "ALL") return alert("Iltimos, o'chirish uchun aniq bitta Mockni tanlang!");
-
       if (!confirm(`${selected} va uning barcha savollarini o'chirmoqchimisiz?`)) return;
 
       mockList = mockList.filter(m => m !== selected);
@@ -675,7 +662,6 @@ D) 45
       `).join('');
     }
 
-    // ================= TEST ISHLASH LOGIKASI =================
     async function launchExamSession() {
       const name = document.getElementById('reg-name').value.trim();
       if (!name) return alert("Iltimos, ism va familiyangizni kiriting!");
@@ -704,6 +690,7 @@ D) 45
       startExamClock();
     }
 
+    // SAVOL VA VARIANTLARNI CHIQARISH (AVTOMATIK LATEX PARSER QO'SHILGAN)
     function loadCurrentQuestion() {
       const q = activeQuestions[currentQIdx];
       document.getElementById('display-q-badge').textContent = `Question ${currentQIdx + 1} of ${activeQuestions.length}`;
@@ -712,8 +699,6 @@ D) 45
       
       const qTextDiv = document.getElementById('q-text-content');
       qTextDiv.innerHTML = q.question;
-
-      if (window.MathJax) MathJax.typesetPromise([qTextDiv]).catch(() => {});
 
       const bmBtn = document.getElementById('btn-mark-review');
       bmBtn.className = flaggedMap[currentQIdx] 
@@ -739,6 +724,12 @@ D) 45
           const isChosen = userAnswers[currentQIdx] === opt;
           const isStriked = currentEliminated.includes(idx);
 
+          // AGAR VARIANTDA LATEX BELGISI BO'LSA, AVTOMATIK DOLLAR BELGISI BILAN O'RAYDI
+          let formattedOpt = opt.toString();
+          if (formattedOpt.includes('\\') && !formattedOpt.startsWith('$')) {
+            formattedOpt = `$${formattedOpt}$`;
+          }
+
           const optBtn = document.createElement('div');
           optBtn.className = `p-3.5 border rounded-xl flex items-center justify-between cursor-pointer transition ${
             isChosen ? 'border-blue-900 bg-blue-50 ring-2 ring-blue-900 font-semibold text-slate-900' : 'border-slate-300 hover:bg-slate-50 text-slate-800'
@@ -747,7 +738,7 @@ D) 45
           optBtn.innerHTML = `
             <div class="flex items-center gap-3">
               <span class="w-6 h-6 rounded-full border border-slate-400 flex items-center justify-center text-xs font-bold">${letter}</span>
-              <span class="sat-math-text text-base">${opt}</span>
+              <span class="sat-math-text text-base">${formattedOpt}</span>
             </div>
             ${isEliminatorActive ? `<span class="text-xs text-rose-500 font-bold px-2 py-1 bg-rose-50 rounded">${isStriked ? 'Tiklash' : 'O\'chirish'}</span>` : ''}
           `;
@@ -764,8 +755,11 @@ D) 45
 
           mcqBox.appendChild(optBtn);
         });
+      }
 
-        if (window.MathJax) MathJax.typesetPromise([mcqBox]).catch(() => {});
+      // MATJAX QAYTA ISHLASH (SAVOL VA VARIANTLAR UCHUN)
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise([qTextDiv, mcqBox]).catch(() => {});
       }
 
       document.getElementById('btn-nav-prev').disabled = currentQIdx === 0;
@@ -1005,34 +999,72 @@ D) 45
     function openModal(id) { document.getElementById(`modal-${id}`).classList.remove('hidden'); refreshIcons(); }
     function closeModal(id) { document.getElementById(`modal-${id}`).classList.add('hidden'); }
 
-    // Suzuvchi Desmos
+    // ================= DESMOS SILJITISH (KOMPYUTER VA TELEFON/SENSOR UCHUN TO'LIQ MOSLANGAN) =================
     (function makeDraggable() {
       const modal = document.getElementById("modal-desmos");
       const header = modal.querySelector(".draggable-header");
       let isDragging = false, startX, startY, initialLeft, initialTop;
 
+      // 1. Sichqoncha orqali (Kompyuterda)
       header.addEventListener("mousedown", (e) => {
+        startDrag(e.clientX, e.clientY);
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onEnd);
+      });
+
+      function onMouseMove(e) {
+        moveDrag(e.clientX, e.clientY);
+      }
+
+      // 2. Sensorli ekran / Barmoq orqali (Smartfon va Planshetlarda)
+      header.addEventListener("touchstart", (e) => {
+        if (e.touches.length === 1) {
+          startDrag(e.touches[0].clientX, e.touches[0].clientY);
+          document.addEventListener("touchmove", onTouchMove, { passive: false });
+          document.addEventListener("touchend", onEnd);
+        }
+      }, { passive: true });
+
+      function onTouchMove(e) {
+        if (!isDragging) return;
+        e.preventDefault(); // Ekran scroll bo'lib ketishini to'xtatadi
+        moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+      }
+
+      function startDrag(clientX, clientY) {
         isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
+        startX = clientX;
+        startY = clientY;
         const rect = modal.getBoundingClientRect();
         initialLeft = rect.left;
         initialTop = rect.top;
         modal.style.right = 'auto';
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-      });
-
-      function onMouseMove(e) {
-        if (!isDragging) return;
-        modal.style.left = `${initialLeft + (e.clientX - startX)}px`;
-        modal.style.top = `${initialTop + (e.clientY - startY)}px`;
+        modal.style.bottom = 'auto';
+        modal.style.margin = '0';
       }
 
-      function onMouseUp() {
+      function moveDrag(clientX, clientY) {
+        if (!isDragging) return;
+        const deltaX = clientX - startX;
+        const deltaY = clientY - startY;
+
+        let newLeft = initialLeft + deltaX;
+        let newTop = initialTop + deltaY;
+
+        // Ekranning chetlaridan chiqib ketmasligi uchun chegara
+        newLeft = Math.max(10, Math.min(window.innerWidth - modal.offsetWidth - 10, newLeft));
+        newTop = Math.max(10, Math.min(window.innerHeight - 80, newTop));
+
+        modal.style.left = `${newLeft}px`;
+        modal.style.top = `${newTop}px`;
+      }
+
+      function onEnd() {
         isDragging = false;
         document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
+        document.removeEventListener("mouseup", onEnd);
+        document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("touchend", onEnd);
       }
     })();
 
