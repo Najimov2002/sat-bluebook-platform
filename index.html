@@ -56,7 +56,7 @@
         Digital SAT &bull; Bluebook Platform
       </div>
 
-      <div class="flex items-center gap-4 mb-6 mt-2">
+      <div class="flex items-center gap-4 mb-4 mt-2">
         <div class="p-3 bg-blue-950 border border-blue-800 rounded-xl text-blue-400 shrink-0">
           <i data-lucide="award" class="w-8 h-8"></i>
         </div>
@@ -64,6 +64,27 @@
           <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight">SAT Math Assessment Room</h1>
           <p class="text-xs text-blue-400 font-medium">Qarshi shahridagi muhandislik maktabi</p>
         </div>
+      </div>
+
+      <!-- SAT MATH 800 SERTIFIKAT NISHONI -->
+      <div class="mb-5 p-3 sm:p-3.5 bg-gradient-to-r from-emerald-950/80 via-slate-900 to-blue-950/80 border border-emerald-500/40 rounded-xl flex items-center justify-between gap-3 shadow-md">
+        <div class="flex items-center gap-3 truncate">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-black text-sm font-mono shrink-0">
+            800
+          </div>
+          <div class="truncate">
+            <div class="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
+              <span>Instructor Math Score:</span>
+              <span class="text-emerald-400 font-black">800/800</span>
+              <span class="text-[10px] bg-emerald-900/80 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-700/60 font-mono">&gt;99th</span>
+            </div>
+            <div class="text-[11px] text-slate-400 truncate">Otabek I Najimov &bull; Official College Board SAT</div>
+          </div>
+        </div>
+        <button onclick="openModal('cert')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm shrink-0">
+          <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Sertifikat</span>
+        </button>
       </div>
 
       <div class="space-y-4">
@@ -98,7 +119,6 @@
             <div class="text-blue-400/90 font-bold text-xs">&copy; Otabek Najimov</div>
             
             <div class="flex items-center justify-center sm:justify-end gap-3 pt-1 text-[11px]">
-              <!-- Telefon raqam havolasi -->
               <a href="tel:+998912205510" class="text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition">
                 <i data-lucide="phone" class="w-3.5 h-3.5"></i>
                 <span>+998 91 220 55 10</span>
@@ -106,7 +126,6 @@
 
               <span class="text-slate-700">•</span>
 
-              <!-- Telegram havolasi -->
               <a href="https://t.me/uz_master" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-medium flex items-center gap-1 transition">
                 <i data-lucide="send" class="w-3.5 h-3.5"></i>
                 <span>Telegram</span>
@@ -114,6 +133,22 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SERTIFIKAT MODAL OYNASI ==================== -->
+  <div id="modal-cert" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[92vh]">
+      <div class="h-11 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2 text-xs font-bold text-emerald-400">
+          <i data-lucide="award" class="w-4 h-4"></i>
+          <span>Official SAT Math 800/800 Certificate</span>
+        </div>
+        <button onclick="closeModal('cert')" class="text-slate-400 hover:text-white font-bold text-xl px-2">&times;</button>
+      </div>
+      <div class="p-3 overflow-y-auto flex justify-center bg-slate-950 items-center">
+        <img src="sat-800.jpg" alt="SAT Math 800 - Otabek Najimov" class="rounded-lg shadow-lg max-w-full h-auto object-contain">
       </div>
     </div>
   </div>
@@ -229,7 +264,7 @@
       </div>
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER: Telefondan kirganda eng tagiga qotirilgan qulay panel -->
     <footer class="fixed bottom-0 left-0 right-0 z-40 bg-slate-100 border-t border-slate-300 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl pb-safe">
       <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
         
