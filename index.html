@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <!-- SAT MATH 800 SERTIFIKAT NISHONI (PDF UCHUN) -->
+      <!-- SAT MATH 800 SERTIFIKAT NISHONI (RASM BILAN OCHILADI) -->
       <div class="mb-5 p-3 sm:p-3.5 bg-gradient-to-r from-emerald-950/80 via-slate-900 to-blue-950/80 border border-emerald-500/40 rounded-xl flex items-center justify-between gap-3 shadow-md hover:border-emerald-500/70 transition">
         <div class="flex items-center gap-3 truncate">
           <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-black text-sm font-mono shrink-0">
@@ -101,8 +101,8 @@
           </div>
         </div>
         <button onclick="openModal('cert')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm shrink-0">
-          <i data-lucide="file-check" class="w-3.5 h-3.5"></i>
-          <span>PDF Sertifikat</span>
+          <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+          <span>Sertifikat</span>
         </button>
       </div>
 
@@ -126,6 +126,7 @@
           <i data-lucide="play" class="w-4 h-4 fill-current"></i>
         </button>
 
+        <!-- Pastki qism: Admin va Aloqa ma'lumotlari -->
         <div class="pt-5 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
           <button onclick="openAdminLoginModal()" class="text-slate-400 hover:text-blue-400 font-semibold flex items-center gap-1.5 py-1 px-2 rounded hover:bg-slate-800 transition">
             <i data-lucide="lock" class="w-3.5 h-3.5"></i>
@@ -155,33 +156,19 @@
     </div>
   </div>
 
-  <!-- ==================== SERTIFIKAT MODAL (ORIGINAL PDF FORMATIDA) ==================== -->
-  <div id="modal-cert" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6 fade-screen-in">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full h-[90vh] overflow-hidden shadow-2xl relative flex flex-col">
+  <!-- ==================== SERTIFIKAT MODAL (TELEFONDA TO'G'RIDAN-TO'G'RI OCHILADIGAN RASM) ==================== -->
+  <div id="modal-cert" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6 fade-screen-in" onclick="if(event.target === this) closeModal('cert')">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-hidden shadow-2xl relative flex flex-col">
       <div class="h-12 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 border-b border-slate-700">
         <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-emerald-400">
           <i data-lucide="award" class="w-4 h-4"></i>
-          <span>Official SAT Math 800/800 Certificate (College Board PDF)</span>
+          <span>Official SAT Math 800/800 Certificate</span>
         </div>
-        <div class="flex items-center gap-2">
-          <a href="sat-800.pdf" target="_blank" download class="text-xs bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center gap-1">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline">Yuklab olish</span>
-          </a>
-          <button onclick="closeModal('cert')" class="text-slate-400 hover:text-white font-bold text-2xl px-2">&times;</button>
-        </div>
+        <button onclick="closeModal('cert')" class="text-slate-400 hover:text-white font-bold text-2xl px-2">&times;</button>
       </div>
-      <!-- To'g'ridan-to'g'ri PDF ko'rsatish obyekti -->
-      <div class="flex-1 w-full h-full bg-slate-950 p-1">
-        <object data="sat-800.pdf" type="application/pdf" class="w-full h-full rounded-b-xl border-none">
-          <div class="flex flex-col items-center justify-center h-full p-6 text-center">
-            <p class="text-sm text-slate-300 mb-3">Mobil brauzeringiz PDF faylni ichkarida ko'rsatishni qo'llab-quvvatlamadi.</p>
-            <a href="sat-800.pdf" target="_blank" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold flex items-center gap-2">
-              <i data-lucide="external-link" class="w-4 h-4"></i>
-              Sertifikat PDF-ni ochish
-            </a>
-          </div>
-        </object>
+      <!-- Rasm hech narsa so'ramasdan darhol to'liq sifatda ochiladi -->
+      <div class="p-3 overflow-y-auto flex justify-center bg-slate-950 items-center">
+        <img src="sat-800.jpg" alt="SAT Math 800 - Otabek Najimov" class="rounded-lg shadow-xl max-w-full h-auto object-contain select-text">
       </div>
     </div>
   </div>
@@ -817,7 +804,7 @@ D) 45" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs
       const qWrapper = document.getElementById('exam-card-wrapper');
       if (qWrapper) {
         qWrapper.classList.remove('slide-question-in');
-        void qWrapper.offsetWidth; // Qayta animatsiya chaqirish
+        void qWrapper.offsetWidth;
         qWrapper.classList.add('slide-question-in');
       }
 
