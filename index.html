@@ -23,6 +23,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
     
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body { 
       font-family: 'Inter', sans-serif; 
       user-select: none; 
@@ -42,11 +47,11 @@
       text-decoration: line-through; 
       opacity: 0.4; 
     }
-    .pb-safe {
-      padding-bottom: env(safe-area-inset-bottom, 12px);
+    .mobile-nav-panel {
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
     }
 
-    /* Silliq animatsiyalar (Smooth Transitions) */
+    /* Silliq animatsiyalar */
     .fade-screen-in {
       animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
@@ -66,7 +71,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen overflow-hidden">
+<body class="bg-slate-900 text-slate-100 min-h-screen">
 
   <!-- ==================== 1. RO'YXATDAN O'TISH & MOCK TANLASH ==================== -->
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10 fade-screen-in">
@@ -85,7 +90,7 @@
         </div>
       </div>
 
-      <!-- SAT MATH 800 SERTIFIKAT NISHONI (RASM BILAN OCHILADI) -->
+      <!-- SAT MATH 800 SERTIFIKAT NISHONI -->
       <div class="mb-5 p-3 sm:p-3.5 bg-gradient-to-r from-emerald-950/80 via-slate-900 to-blue-950/80 border border-emerald-500/40 rounded-xl flex items-center justify-between gap-3 shadow-md hover:border-emerald-500/70 transition">
         <div class="flex items-center gap-3 truncate">
           <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-black text-sm font-mono shrink-0">
@@ -156,7 +161,7 @@
     </div>
   </div>
 
-  <!-- ==================== SERTIFIKAT MODAL (TELEFONDA TO'G'RIDAN-TO'G'RI OCHILADIGAN RASM) ==================== -->
+  <!-- ==================== SERTIFIKAT MODAL ==================== -->
   <div id="modal-cert" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6 fade-screen-in" onclick="if(event.target === this) closeModal('cert')">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-hidden shadow-2xl relative flex flex-col">
       <div class="h-12 bg-slate-800 text-white px-4 flex items-center justify-between shrink-0 border-b border-slate-700">
@@ -166,7 +171,6 @@
         </div>
         <button onclick="closeModal('cert')" class="text-slate-400 hover:text-white font-bold text-2xl px-2">&times;</button>
       </div>
-      <!-- Rasm hech narsa so'ramasdan darhol to'liq sifatda ochiladi -->
       <div class="p-3 overflow-y-auto flex justify-center bg-slate-950 items-center">
         <img src="sat-800.jpg" alt="SAT Math 800 - Otabek Najimov" class="rounded-lg shadow-xl max-w-full h-auto object-contain select-text">
       </div>
@@ -208,7 +212,7 @@
   <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none fade-screen-in">
     
     <!-- HEADER -->
-    <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm">
+    <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm z-30">
       <div class="flex items-center gap-2 sm:gap-3 truncate max-w-[170px] sm:max-w-none">
         <span class="font-bold text-xs sm:text-sm tracking-tight text-slate-800 truncate" id="header-mock-title">MOCK</span>
         <span class="text-slate-400 text-xs hidden sm:inline">|</span>
@@ -250,8 +254,8 @@
       </div>
     </header>
 
-    <!-- ASOSIY MAYDON (Silliq savol o'tishi bilan) -->
-    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-28 sm:pb-24 bg-white flex justify-center">
+    <!-- ASOSIY MAYDON (Pastdan yetarlicha bo'sh joy: pb-36) -->
+    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-36 bg-white flex justify-center">
       <div id="exam-card-wrapper" class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start slide-question-in">
         <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-5 md:pb-0 md:pr-8">
           <div class="flex justify-between items-center mb-3">
@@ -284,33 +288,36 @@
       </div>
     </main>
 
-    <!-- FOOTER: Mobil uchun qulay boshqaruv -->
-    <footer class="fixed bottom-0 left-0 right-0 z-40 bg-slate-100 border-t border-slate-300 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl pb-safe">
+    <!-- FOOTER: Telefondan kirganda 100% KORINADIGAN KUCHAYTIRILGAN PANEL (z-[100]) -->
+    <footer class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t-2 border-slate-300 px-3 sm:px-6 pt-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] mobile-nav-panel">
       <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
         
-        <button id="btn-nav-prev" onclick="jumpQuestionRelative(-1)" class="flex-1 sm:flex-initial sm:w-28 py-2.5 sm:py-2 border border-slate-300 bg-white active:scale-95 active:bg-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center gap-1 shadow-sm disabled:opacity-30">
-          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        <!-- BACK TUGMASI (Katta, bosilishi oson) -->
+        <button id="btn-nav-prev" onclick="jumpQuestionRelative(-1)" class="flex-1 sm:flex-initial sm:w-32 h-12 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 border-2 border-slate-300 rounded-xl font-bold text-sm text-slate-800 flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-30 disabled:pointer-events-none active:scale-95">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
           <span>Back</span>
         </button>
 
+        <!-- ORTADAGI NAVIGATOR TUGMASI -->
         <div class="relative flex-1 sm:flex-initial flex justify-center">
-          <button onclick="toggleNavPopup()" class="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-slate-800 text-white active:scale-95 active:bg-slate-700 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm">
+          <button onclick="toggleNavPopup()" class="w-full sm:w-auto px-4 h-12 bg-slate-900 active:bg-slate-800 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md active:scale-95">
             <span id="nav-summary-label">Savol 1 / 30</span>
-            <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+            <i data-lucide="grid" class="w-4 h-4"></i>
           </button>
 
-          <div id="nav-popup-modal" class="hidden absolute bottom-14 left-1/2 -translate-x-1/2 w-72 sm:w-80 bg-white border border-slate-300 shadow-2xl rounded-2xl p-4 z-50 fade-screen-in">
+          <div id="nav-popup-modal" class="hidden absolute bottom-16 left-1/2 -translate-x-1/2 w-72 sm:w-80 bg-white border-2 border-slate-300 shadow-2xl rounded-2xl p-4 z-[110] fade-screen-in">
             <div class="text-xs font-bold text-slate-600 mb-3 flex justify-between items-center">
               <span>Barcha savollar</span>
-              <span class="text-blue-800 font-extrabold text-base cursor-pointer px-2" onclick="toggleNavPopup()">&times;</span>
+              <span class="text-blue-800 font-extrabold text-xl cursor-pointer px-2" onclick="toggleNavPopup()">&times;</span>
             </div>
             <div id="nav-bubbles-grid" class="grid grid-cols-5 gap-2 max-h-60 overflow-y-auto p-1"></div>
           </div>
         </div>
 
-        <button id="btn-nav-next" onclick="jumpQuestionRelative(1)" class="flex-1 sm:flex-initial sm:w-28 py-2.5 sm:py-2 bg-blue-800 active:scale-95 active:bg-blue-900 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1 shadow-md disabled:opacity-30">
+        <!-- NEXT TUGMASI (Yorqin ko'k, katta va qulay) -->
+        <button id="btn-nav-next" onclick="jumpQuestionRelative(1)" class="flex-1 sm:flex-initial sm:w-32 h-12 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/30 disabled:opacity-30 disabled:pointer-events-none active:scale-95">
           <span>Next</span>
-          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <i data-lucide="chevron-right" class="w-5 h-5"></i>
         </button>
 
       </div>
