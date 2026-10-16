@@ -25,8 +25,10 @@
     
     html, body {
       height: 100%;
+      height: 100dvh;
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
     body { 
       font-family: 'Inter', sans-serif; 
@@ -47,31 +49,37 @@
       text-decoration: line-through; 
       opacity: 0.4; 
     }
-    .mobile-nav-panel {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    .exam-viewport {
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+    .safe-footer {
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
     }
 
     /* Silliq animatsiyalar */
     .fade-screen-in {
-      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .slide-question-in {
-      animation: slideInQ 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: slideInQ 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.985); }
+      from { opacity: 0; transform: scale(0.99); }
       to { opacity: 1; transform: scale(1); }
     }
     @keyframes slideInQ {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
     button, select, input {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.15s ease-in-out;
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
+<body class="bg-slate-900 text-slate-100">
 
   <!-- ==================== 1. RO'YXATDAN O'TISH & MOCK TANLASH ==================== -->
   <div id="screen-home" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-center items-center px-4 overflow-y-auto py-10 fade-screen-in">
@@ -209,11 +217,11 @@
   </div>
 
   <!-- ==================== 2. RASMIY BLUEBOOK IMTIHON XONASI ==================== -->
-  <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 flex flex-col h-screen select-none fade-screen-in">
+  <div id="screen-exam" class="hidden fixed inset-0 z-40 bg-white text-slate-900 exam-viewport select-none fade-screen-in">
     
-    <!-- HEADER -->
+    <!-- 1. HEADER (Qimirlamasdan tepada turadi) -->
     <header class="h-14 border-b border-slate-300 bg-slate-100 flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm z-30">
-      <div class="flex items-center gap-2 sm:gap-3 truncate max-w-[170px] sm:max-w-none">
+      <div class="flex items-center gap-2 sm:gap-3 truncate max-w-[150px] sm:max-w-none">
         <span class="font-bold text-xs sm:text-sm tracking-tight text-slate-800 truncate" id="header-mock-title">MOCK</span>
         <span class="text-slate-400 text-xs hidden sm:inline">|</span>
         <span class="text-xs font-semibold text-slate-600 hidden sm:inline">Directions <i data-lucide="chevron-down" class="inline w-3 h-3"></i></span>
@@ -221,17 +229,17 @@
 
       <!-- Taymer -->
       <div class="flex items-center gap-2">
-        <div class="bg-white border border-slate-300 px-2.5 sm:px-3.5 py-1 rounded-lg flex items-center gap-1.5 sm:gap-2 shadow-inner">
+        <div class="bg-white border border-slate-300 px-2 sm:px-3.5 py-1 rounded-lg flex items-center gap-1 sm:gap-2 shadow-inner">
           <i data-lucide="clock" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500"></i>
           <span id="exam-timer" class="font-mono font-bold text-xs sm:text-sm text-slate-800">35:00</span>
-          <button onclick="toggleTimerShow()" class="text-slate-400 hover:text-slate-700 ml-1">
+          <button onclick="toggleTimerShow()" class="text-slate-400 hover:text-slate-700 ml-0.5 sm:ml-1">
             <span id="timer-toggle-txt" class="text-[10px] sm:text-[11px] font-bold text-blue-800">Hide</span>
           </button>
         </div>
       </div>
 
       <!-- Asboblar va Xavfsiz End Exam -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
+      <div class="flex items-center gap-1 sm:gap-2">
         <button id="tool-eliminator-btn" onclick="toggleEliminatorTool()" title="Variantlarni o'chirish" class="flex items-center gap-1 px-2 sm:px-2.5 py-1 text-xs font-semibold border rounded-lg border-slate-300 bg-white text-slate-700 hover:bg-slate-50 active:scale-95">
           <i data-lucide="strikethrough" class="w-3.5 h-3.5"></i>
           <span class="hidden md:inline">Eliminate</span>
@@ -247,17 +255,17 @@
           <span class="hidden sm:inline">Calculator (Desmos)</span>
         </button>
 
-        <button onclick="confirmFinishExam()" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs shadow-sm transition active:scale-95 ml-1" title="Testni yakunlash">
+        <button onclick="confirmFinishExam()" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs shadow-sm transition active:scale-95 ml-0.5" title="Testni yakunlash">
           <span class="hidden sm:inline">End Exam</span>
           <span class="sm:hidden text-[11px]">Tugatish</span>
         </button>
       </div>
     </header>
 
-    <!-- ASOSIY MAYDON (Pastdan yetarlicha bo'sh joy: pb-36) -->
-    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-36 bg-white flex justify-center">
-      <div id="exam-card-wrapper" class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start slide-question-in">
-        <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-5 md:pb-0 md:pr-8">
+    <!-- 2. ASOSIY MAYDON (Faqat shu o'rtadagi qism mustaqil skroll bo'ladi) -->
+    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-5 bg-white flex justify-center">
+      <div id="exam-card-wrapper" class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 items-start slide-question-in pb-8">
+        <div class="border-b md:border-b-0 md:border-r border-slate-200 pb-4 md:pb-0 md:pr-8">
           <div class="flex justify-between items-center mb-3">
             <span id="display-q-badge" class="px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded-md">
               Question 1
@@ -269,16 +277,16 @@
           </div>
 
           <div id="q-topic-tag" class="text-[11px] font-bold uppercase tracking-wider text-blue-700 mb-2">Math Section</div>
-          <div id="q-text-content" class="sat-math-text text-slate-900 mb-6"></div>
+          <div id="q-text-content" class="sat-math-text text-slate-900 mb-4"></div>
         </div>
 
         <div class="md:pl-4">
-          <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex justify-between items-center">
+          <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5 flex justify-between items-center">
             <span>Javobingiz:</span>
             <span id="eliminator-notice" class="text-[10px] text-amber-700 font-bold hidden">Variant o'chirish faol!</span>
           </div>
 
-          <div id="mcq-container" class="space-y-3"></div>
+          <div id="mcq-container" class="space-y-2.5"></div>
 
           <div id="spr-container" class="hidden space-y-4">
             <p class="text-xs text-slate-500">Javobni katakka kiriting (masalan: 5, 2.5, 7/2):</p>
@@ -288,24 +296,24 @@
       </div>
     </main>
 
-    <!-- FOOTER: Telefondan kirganda 100% KORINADIGAN KUCHAYTIRILGAN PANEL (z-[100]) -->
-    <footer class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t-2 border-slate-300 px-3 sm:px-6 pt-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] mobile-nav-panel">
+    <!-- 3. FOOTER: TELEFONDA HAM, DESKTOPDA HAM 100% KO'RINADIGAN DOIMIY QOTIRILGAN PANEL -->
+    <footer class="shrink-0 bg-slate-50 border-t border-slate-300 px-3 sm:px-6 pt-2 pb-2 safe-footer shadow-[0_-4px_15px_rgba(0,0,0,0.08)] z-30">
       <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
         
-        <!-- BACK TUGMASI (Katta, bosilishi oson) -->
-        <button id="btn-nav-prev" onclick="jumpQuestionRelative(-1)" class="flex-1 sm:flex-initial sm:w-32 h-12 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 border-2 border-slate-300 rounded-xl font-bold text-sm text-slate-800 flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-30 disabled:pointer-events-none active:scale-95">
-          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        <!-- BACK TUGMASI -->
+        <button id="btn-nav-prev" onclick="jumpQuestionRelative(-1)" class="flex-1 sm:flex-initial sm:w-28 h-11 bg-white hover:bg-slate-100 active:bg-slate-200 border border-slate-300 rounded-xl font-bold text-xs sm:text-sm text-slate-800 flex items-center justify-center gap-1 shadow-sm disabled:opacity-30 disabled:pointer-events-none active:scale-95">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
           <span>Back</span>
         </button>
 
-        <!-- ORTADAGI NAVIGATOR TUGMASI -->
+        <!-- SAVOLLAR NAVIGATORI (POPUP) -->
         <div class="relative flex-1 sm:flex-initial flex justify-center">
-          <button onclick="toggleNavPopup()" class="w-full sm:w-auto px-4 h-12 bg-slate-900 active:bg-slate-800 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md active:scale-95">
+          <button onclick="toggleNavPopup()" class="w-full sm:w-auto px-4 h-11 bg-slate-800 active:bg-slate-900 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-sm active:scale-95">
             <span id="nav-summary-label">Savol 1 / 30</span>
             <i data-lucide="grid" class="w-4 h-4"></i>
           </button>
 
-          <div id="nav-popup-modal" class="hidden absolute bottom-16 left-1/2 -translate-x-1/2 w-72 sm:w-80 bg-white border-2 border-slate-300 shadow-2xl rounded-2xl p-4 z-[110] fade-screen-in">
+          <div id="nav-popup-modal" class="hidden absolute bottom-14 left-1/2 -translate-x-1/2 w-72 sm:w-80 bg-white border border-slate-300 shadow-2xl rounded-2xl p-4 z-50 fade-screen-in">
             <div class="text-xs font-bold text-slate-600 mb-3 flex justify-between items-center">
               <span>Barcha savollar</span>
               <span class="text-blue-800 font-extrabold text-xl cursor-pointer px-2" onclick="toggleNavPopup()">&times;</span>
@@ -314,10 +322,10 @@
           </div>
         </div>
 
-        <!-- NEXT TUGMASI (Yorqin ko'k, katta va qulay) -->
-        <button id="btn-nav-next" onclick="jumpQuestionRelative(1)" class="flex-1 sm:flex-initial sm:w-32 h-12 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/30 disabled:opacity-30 disabled:pointer-events-none active:scale-95">
+        <!-- NEXT TUGMASI -->
+        <button id="btn-nav-next" onclick="jumpQuestionRelative(1)" class="flex-1 sm:flex-initial sm:w-28 h-11 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1 shadow-md disabled:opacity-30 disabled:pointer-events-none active:scale-95">
           <span>Next</span>
-          <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
 
       </div>
